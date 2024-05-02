@@ -1,0 +1,9 @@
+﻿<Application x:Class="Shoe_Store_DB.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Shoe_Store_DB"
+             StartupUri="View_Layer/LoginWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary Source="\Style\ButtonStyle.xaml"/>
+    </Application.Resources>
+</Application>

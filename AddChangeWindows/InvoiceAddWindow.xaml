@@ -1,0 +1,66 @@
+﻿<Window x:Class="Shoe_Store_DB.AddChangeWindows.InvoiceAddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shoe_Store_DB.AddChangeWindows"
+        mc:Ignorable="d"
+        Title="InvoiceAddWindow" Height="450" Width="370" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        Background="#00000000" MouseDown="Window_MouseDown">
+    <Grid Background="Transparent">
+        <Border CornerRadius="16" Background="White"  BorderThickness="2" BorderBrush="Black"
+                Opacity="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnMinimize" Grid.Column="1" Content="-" 
+                            Foreground="White" Cursor="Hand" FontSize="16" FontFamily="Montserrat" 
+                            Click="btnMinimize_Click" Style="{StaticResource roundBlackButton}" Height="40" VerticalAlignment="Top"/>
+                    <Button x:Name="btnClose" Grid.Column="2" Content="X" Foreground="White" Cursor="Hand" FontSize="12" FontFamily="Montserrat" 
+                            Click="btnClose_Click" Style="{StaticResource roundBlackButton}"/>
+                </Grid>
+                <Grid Grid.Row="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Employee" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <ComboBox x:Name="cbEmployee" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
+                                  Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" IsEditable="True" 
+                                  Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
+                        <TextBlock Text="Supply time" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBox x:Name="txtTimeOfSale" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Gray" CaretBrush="Black"
+                                 BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
+                                 Cursor="IBeam" TextChanged="txtTimeOfSale_TextChanged" Text="dd.mm.yyyy hh:mm"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Supplier" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <ComboBox x:Name="cbSupplier" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
+                                  Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" IsEditable="True" 
+                                  Padding="0,0,0,0" ItemsSource="{Binding cb2}"/>
+                    </StackPanel>
+                </Grid>
+                <TextBlock Name="txtMessage" Grid.Row="2" Text="Employee and time of sale must be filled in." Foreground="Red" FontSize="15" FontWeight="Medium"
+                           FontFamily="Montserrat" Margin=" 5, 0, 0, 0"/>
+                <Grid Grid.Row="3">
+                    <Button Name="btnAddChange" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Add" Margin="0,5,0,5" 
+        FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAddChange_Click"/>
+
+                </Grid>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
