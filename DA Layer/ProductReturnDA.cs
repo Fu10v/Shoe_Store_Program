@@ -18,7 +18,7 @@ namespace Shoe_Store_DB.DA_Layer
 
         public static List<ProductReturn> RetrieveAllProductReturns()
         {
-            string query = "SELECT return_id, sales_id, return_reason, ifnull(group_concat(Distinct product_name order by 1 separator ', '), '') as returned_products FROM product_return left join sales using(sales_id) left join sales_list using(sales_id) left join product using(product_id) group by 1 order by 1;";
+            string query = "SELECT return_id, sales_id, return_reason, ifnull(group_concat(Distinct product_name order by 1 separator ', '), '') as returned_products FROM product_return left join sales using(sales_id) left join sales_list using(sales_id) left join product_quantity using(product_quantity_id) join product using(product_id) group by 1 order by sales_id;";
             cmd = DBHelper.RunQuery(query);
             List<ProductReturn> productReturns = new List<ProductReturn>();
             if (cmd != null)
@@ -41,7 +41,7 @@ namespace Shoe_Store_DB.DA_Layer
 
         public static List<ProductReturn> ProductReturnSearch(string search)
         {
-            string query = "SELECT return_id, sales_id, return_reason, ifnull(group_concat(Distinct product_name order by 1 separator ', '), '') as returned_products FROM product_return left join sales using(sales_id) left join sales_list using(sales_id) left join product using(product_id) where return_id like @searchParameter or sales_id like @searchParameter or return_reason like @searchParameter or product_name like @searchParameter group by 1 order by 1;";
+            string query = "SELECT return_id, sales_id, return_reason, ifnull(group_concat(Distinct product_name order by 1 separator ', '), '') as returned_products FROM product_return left join sales using(sales_id) left join sales_list using(sales_id) left join product_quantity using(product_quantity_id) join product using(product_id) where sales_id like @searchParameter or return_reason like @searchParameter or product_name like @searchParameter group by 1 order by sales_id;";
             cmd = DBHelper.RunQuerySearch(query, search);
             List<ProductReturn> productReturns = new List<ProductReturn>();
             if (cmd != null)

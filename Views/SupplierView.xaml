@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Shoe_Store_DB.Views"
              mc:Ignorable="d" 
-                                                    d:DesignHeight="856" d:DesignWidth="1346" Background="White">
+             d:DesignHeight="856" d:DesignWidth="1346" Background="White">
     <Grid Height="855" Width="1345">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
@@ -14,10 +14,10 @@
         <Grid Grid.Row="0">
             <Border>
                 <StackPanel>
-                    <TextBlock Text="Filter" FontSize="18" FontWeight="Medium" FontFamily="Montserrat"
+                    <TextBlock Text="Фільтр" FontSize="18" FontWeight="Medium" FontFamily="Montserrat"
                                 Foreground="Black" Margin="5,5"></TextBlock>
                     <StackPanel Orientation="Horizontal" Height="50" Margin="5,0,0,0">
-                        <TextBlock Text="Searсh here: " FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                        <TextBlock Text="Пошук: " FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
                                     Foreground="Black" Margin="0,5,0,0" VerticalAlignment="Center"></TextBlock>
                         <TextBox x:Name="txtSearch" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
                                     Foreground="Black" CaretBrush="Black" BorderBrush="Black" BorderThickness="0,0,0,2" Cursor="IBeam"
@@ -50,7 +50,7 @@
                             <ColumnDefinition Width="160"/>
                             <ColumnDefinition Width="160"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="To sort, click on the column headings." Grid.Column="0" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                        <TextBlock Text="Для сортування клацніть на заголовки стовпців." Grid.Column="0" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
                Foreground="Black" Margin="5,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan="2"></TextBlock>
                         
                     </Grid>
@@ -69,18 +69,27 @@
                         <StackPanel>
                             <DataGrid Name="dataGrid" Height="640" Width="1331" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                                       CellStyle="{DynamicResource DataGridCellStyle1}" Style="{DynamicResource DataGridStyle1}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Назва" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Код ЄРДПОУ" Binding="{Binding Edrpou_Code}"/>
+                                    <DataGridTextColumn Header="Номер телефону 1" Binding="{Binding FirstPhoneNumber}"/>
+                                    <DataGridTextColumn Header="Номер телефону 2" Binding="{Binding SecondPhoneNumber}"/>
+                                    <DataGridTextColumn Header="Електронна пошта" Binding="{Binding Email}"/>
+                                    <DataGridTextColumn Header="Адреса" Binding="{Binding Address}"/>
+                                    <DataGridTextColumn Header="Розрахунковий рахунок" Binding="{Binding CurrentAccount}"/>
+                                </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
-                            <Button Name="btnShowAll" Style="{StaticResource ellipseBlackButton}" Content="Update suppliers" Margin="5" 
-                                    FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnShowAll_Click"/>
-                            <Button Name="btnAdd" Style="{StaticResource ellipseBlackButton}" Content="Add" Margin="5" 
+                            <Button Name="btnShowAll" Style="{StaticResource ellipseBlackButton}" Content="Оновити" Margin="5" 
+                                    FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnShowAll_Click"/>
+                            <Button Name="btnAdd" Style="{StaticResource ellipseBlackButton}" Content="Додати" Margin="5" 
                                     FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAdd_Click"/>
-                            <Button Name="btnChange" Style="{StaticResource ellipseBlackButton}" Content="Change selected row" Margin="5" 
+                            <Button Name="btnChange" Style="{StaticResource ellipseBlackButton}" Content="Змінити" Margin="5" 
                                     FontSize="14" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnChange_Click"/>
-                            <Button Name="btnDelete" Style="{StaticResource ellipseBlackButton}" Content="Delete" Margin="5" 
+                            <Button Name="btnDelete" Style="{StaticResource ellipseBlackButton}" Content="Видалити" Margin="5" 
                                     FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnDelete_Click"/>
                         </StackPanel>
 

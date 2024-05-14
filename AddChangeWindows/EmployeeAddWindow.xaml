@@ -8,7 +8,7 @@
         Title="EmployeeAddWindow" Height="450" Width="370" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="#00000000" MouseDown="Window_MouseDown">
     <Grid Background="Transparent">
-        <Border CornerRadius="16" Background="White"  BorderThickness="2" BorderBrush="Black"
+        <Border CornerRadius="0" Background="White"  BorderThickness="2" BorderBrush="Black"
                 Opacity="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -36,11 +36,11 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="First name" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Ім'я" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtFirstName" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="Middle name" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="По батькові" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtMiddleName" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
@@ -48,36 +48,36 @@
                         <TextBox x:Name="txtPhoneNumber" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="Address" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Адреса" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtAddress" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="Date of birth" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Дата народження" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <DatePicker Name="dpDate" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0" Height="28" BorderThickness="1" BorderBrush="Black"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <TextBlock Text="Surname" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Прізвище" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <TextBox x:Name="txtSurname" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="Position" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Позиція" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <ComboBox x:Name="cbPosition" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                                   Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" SelectedIndex="0"
                                   Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
-                        <TextBlock Text="Email" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Електронна пошта" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <TextBox x:Name="txtEmail" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="Gender" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Стать" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <ComboBox x:Name="cbGender" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                                   Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" 
                                   Padding="0,0,0,0" ItemsSource="{Binding cb2}" SelectedIndex="0"/>
                     </StackPanel>
                 </Grid>
-                <TextBlock Name="txtMessage" Grid.Row="2" Text="All fields must be filled in." Foreground="Red" FontSize="15" FontWeight="Medium"
+                <TextBlock Name="txtMessage" Grid.Row="2" Text="Усі поля мають бути заповнені." Foreground="Red" FontSize="15" FontWeight="Medium"
                            FontFamily="Montserrat" Margin=" 5, 0, 0, 0"/>
                 <Grid Grid.Row="3">
-                    <Button Name="btnAddChange" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Add" Margin="0,5,0,5" 
+                    <Button Name="btnAddChange" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Додати" Margin="0,5,0,5" 
         FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAddChange_Click"/>
 
                 </Grid>

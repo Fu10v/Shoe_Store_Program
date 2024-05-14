@@ -18,7 +18,7 @@ namespace Shoe_Store_DB.DA_Layer
 
         public static List<Supplier> RetrieveAllSuppliers()
         {
-            string query = "SELECT supplier_id, supplier_name, supplier_edrpou_code, supplier_fphone_number, ifnull(supplier_sphone_number, '') as second_phone_number, supplier_email, supplier_address, supplier_current_account FROM shoe_store_db.supplier order by 1;";
+            string query = "SELECT supplier_id, supplier_name, supplier_edrpou_code, supplier_fphone_number, ifnull(supplier_sphone_number, '') as second_phone_number, supplier_email, supplier_address, supplier_current_account FROM shoe_store_db.supplier order by supplier_name;";
             cmd = DBHelper.RunQuery(query);
             List<Supplier> suppliers = new List<Supplier>();
             if (cmd != null)
@@ -45,7 +45,7 @@ namespace Shoe_Store_DB.DA_Layer
         }
         public static List<Supplier> SupplierSearch(string search)
         {
-            string query = "SELECT supplier_id, supplier_name, supplier_edrpou_code, supplier_fphone_number, ifnull(supplier_sphone_number, '') as second_phone_number, supplier_email, supplier_address, supplier_current_account FROM shoe_store_db.supplier where supplier_id like @searchParameter or supplier_name like @searchParameter or supplier_edrpou_code like @searchParameter or supplier_fphone_number like @searchParameter or supplier_sphone_number like @searchParameter or supplier_email like @searchParameter or supplier_address like @searchParameter or supplier_current_account like @searchParameter order by 1;";
+            string query = "SELECT supplier_id, supplier_name, supplier_edrpou_code, supplier_fphone_number, ifnull(supplier_sphone_number, '') as second_phone_number, supplier_email, supplier_address, supplier_current_account FROM shoe_store_db.supplier where supplier_id like @searchParameter or supplier_name like @searchParameter or supplier_edrpou_code like @searchParameter or supplier_fphone_number like @searchParameter or supplier_sphone_number like @searchParameter or supplier_email like @searchParameter or supplier_address like @searchParameter or supplier_current_account like @searchParameter order by supplier_name;";
             cmd = DBHelper.RunQuerySearch(query, search);
             List<Supplier> suppliers = new List<Supplier>();
             if (cmd != null)

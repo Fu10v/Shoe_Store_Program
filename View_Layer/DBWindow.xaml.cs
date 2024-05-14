@@ -26,14 +26,16 @@ namespace Shoe_Store_DB.View_Layer
     public partial class DBWindow : Window
     {
         private User user;
-        
+
+        public static List<Object> CartList { get; set; }
 
         public DBWindow(User user)
         {
             InitializeComponent();
             this.user = user;
             radioButton1.IsChecked = true;
-            txtMode.Text = $"Mode: {user.Mode}";
+            txtMode.Text = $"Режим: {user.Mode}";
+            CartList = new List<Object>();
             if (user.Mode == "employee")
             {
                 bAdmin.Background = Brushes.White;
@@ -42,6 +44,8 @@ namespace Shoe_Store_DB.View_Layer
                 radioButton4.IsEnabled = false;
                 radioButton5.IsEnabled = false;
                 radioButton6.IsEnabled = false;
+                btnShowStatistic.IsEnabled = false;
+                btnShowStatistic.Background = Brushes.White;
             }
         }
 
@@ -133,6 +137,22 @@ namespace Shoe_Store_DB.View_Layer
         {
             ProductReturnAddWindow productReturnAddWindow = new ProductReturnAddWindow();
             productReturnAddWindow.Show();
+        }
+
+        private void btnShowOrder_Click(object sender, RoutedEventArgs e)
+        {
+            radioButton1.IsChecked = true;
+            radioButton1.IsEnabled = false;
+            radioButton1.IsEnabled = true;
+            radioButton1.IsChecked = false;
+            CartView cartView = new CartView();
+            viewBox.Content = cartView;
+        }
+
+        private void btnShowStatistic_Click(object sender, RoutedEventArgs e)
+        {
+            StatisticView statisticView = new StatisticView();
+            viewBox.Content = statisticView;
         }
     }
 }

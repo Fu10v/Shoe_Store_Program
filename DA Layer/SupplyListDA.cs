@@ -17,7 +17,7 @@ namespace Shoe_Store_DB.DA_Layer
         private static MySqlDataAdapter sda;
         public static List<SupplyList> RetrieveSupplyList(int invoiceIdParameter)
         {
-            string query = "SELECT supply_list_id, invoice_id, product_name, supply_list_price, supply_list_quantity FROM supply_list left join product using(product_id) where invoice_id = @firstParameter order by 1;";
+            string query = "SELECT supply_list_id, invoice_id, product_name, size_name, color_name, supply_list_price, supply_list_quantity FROM supply_list left join product_quantity using(product_quantity_id) join product using(product_id) join size using(size_id) join color using(color_id) where invoice_id = @firstParameter order by 1;";
             cmd = DBHelper.RunQuery(query, invoiceIdParameter);
             List<SupplyList> supplylists = new List<SupplyList>();
             if (cmd != null)
@@ -30,9 +30,11 @@ namespace Shoe_Store_DB.DA_Layer
                     int id = Convert.ToInt32(dr["supply_list_id"]);
                     int invoice_id = Convert.ToInt32(dr["invoice_id"]);
                     string productName = dr["product_name"].ToString();
-                    int supply_list_price = Convert.ToInt32(dr["supply_list_price"]);
+                    string sizeName = dr["size_name"].ToString();
+                    string colorName = dr["color_name"].ToString();
+                    double supply_list_price = Convert.ToInt32(dr["supply_list_price"]);
                     int supply_list_quantity = Convert.ToInt32(dr["supply_list_quantity"]);
-                    SupplyList supplyList = new SupplyList(id, invoice_id, productName, supply_list_price, supply_list_quantity);
+                    SupplyList supplyList = new SupplyList(id, invoice_id, productName, sizeName, colorName, supply_list_price, supply_list_quantity);
                     supplylists.Add(supplyList);
                 }
             }
@@ -40,7 +42,7 @@ namespace Shoe_Store_DB.DA_Layer
         }
         public static List<SupplyList> SupplyListSearch(int invoiceIdParameter, string search)
         {
-            string query = "SELECT supply_list_id, invoice_id, product_name, supply_list_price, supply_list_quantity FROM supply_list left join product using(product_id) where (invoice_id = @firstParameter) and (supply_list_id like @searchParameter or product_name like @searchParameter or supply_list_price like @searchParameter or supply_list_quantity like @searchParameter) order by 1;";
+            string query = "SELECT supply_list_id, invoice_id, product_name, size_name, color_name, supply_list_price, supply_list_quantity FROM supply_list left join product_quantity using(product_quantity_id) join product using(product_id) join size using(size_id) join color using(color_id) where (invoice_id = @firstParameter) and (supply_list_id like @searchParameter or product_name like @searchParameter or size_name like @searchParameter or color_name like @searchParameter) order by 1;";
             cmd = DBHelper.RunQuerySecondSearch(query, invoiceIdParameter, search);
             List<SupplyList> supplylists = new List<SupplyList>();
             if (cmd != null)
@@ -53,9 +55,11 @@ namespace Shoe_Store_DB.DA_Layer
                     int id = Convert.ToInt32(dr["supply_list_id"]);
                     int invoice_id = Convert.ToInt32(dr["invoice_id"]);
                     string productName = dr["product_name"].ToString();
-                    int supply_list_price = Convert.ToInt32(dr["supply_list_price"]);
+                    string sizeName = dr["size_name"].ToString();
+                    string colorName = dr["color_name"].ToString();
+                    double supply_list_price = Convert.ToInt32(dr["supply_list_price"]);
                     int supply_list_quantity = Convert.ToInt32(dr["supply_list_quantity"]);
-                    SupplyList supplyList = new SupplyList(id, invoice_id, productName, supply_list_price, supply_list_quantity);
+                    SupplyList supplyList = new SupplyList(id, invoice_id, productName, sizeName, colorName, supply_list_price, supply_list_quantity);
                     supplylists.Add(supplyList);
                 }
             }
@@ -68,16 +72,16 @@ namespace Shoe_Store_DB.DA_Layer
             return RetrieveSupplyList(invoiceIdParameter);
         }
 
-        public static void SupplyListAdd(int invoiceId, int productId, int price, int quantity)
+        public static void SupplyListAdd(int invoiceId, int productQuantityId, int price, int quantity)
         {
-            string query = "INSERT INTO supply_list (invoice_id, product_id, supply_list_price, supply_list_quantity) VALUES (@invoiceId, @productId, @price, @quantity);";
-            cmd = DBHelper.RunQuerySupplyListAddChange(query, invoiceId, productId, price, quantity);
+            string query = "INSERT INTO supply_list (invoice_id, product_quantity_id, supply_list_price, supply_list_quantity) VALUES (@invoiceId, @productQuantityId, @price, @quantity);";
+            cmd = DBHelper.RunQuerySupplyListAddChange(query, invoiceId, productQuantityId, price, quantity);
 
         }
-        public static void SupplyListChange(int id, int invoiceId, int productId, int price, int quantity)
+        public static void SupplyListChange(int id, int invoiceId, int productQuantityId, int price, int quantity)
         {
-            string query = "UPDATE supply_list SET invoice_id = @invoiceId, product_id = @productId, supply_list_price = @price, supply_list_quantity = @quantity WHERE supply_list_id = " + id + ";";
-            cmd = DBHelper.RunQuerySupplyListAddChange(query, invoiceId, productId, price, quantity);
+            string query = "UPDATE supply_list SET invoice_id = @invoiceId, product_quantity_id = @productQuantityId, supply_list_price = @price, supply_list_quantity = @quantity WHERE supply_list_id = " + id + ";";
+            cmd = DBHelper.RunQuerySupplyListAddChange(query, invoiceId, productQuantityId, price, quantity);
         }
     }
 }

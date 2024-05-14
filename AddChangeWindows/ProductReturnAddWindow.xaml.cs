@@ -30,14 +30,14 @@ namespace Shoe_Store_DB.AddChangeWindows
         public ProductReturnAddWindow()
         {
             InitializeComponent();
-            btnAddChange.Content = "Add";
+            btnAddChange.Content = "Додати";
         }
 
         public ProductReturnAddWindow(Object productReturnA)
         {
             InitializeComponent();
             productReturn = (ProductReturn)productReturnA;
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
             view = true;
             txtSalesId.Text = productReturn.Sale_id.ToString();
             txtReturnReason.Text = productReturn.ReturnReason;
@@ -65,7 +65,7 @@ namespace Shoe_Store_DB.AddChangeWindows
                 if (txtSalesId.Text != "" && txtReturnReason.Text != "")
                 {
 
-                    if (int.TryParse(txtSalesId.Text, out int number1))
+                    if (int.TryParse(txtSalesId.Text, out int number1) && number1 >= 0)
                     {
                         bool k1 = false;
                         foreach (Classes.Sales sale in sales)
@@ -81,16 +81,16 @@ namespace Shoe_Store_DB.AddChangeWindows
                             else ProductReturnDA.ProductReturnChange(productReturn.Id, number1, txtReturnReason.Text);
                             this.Close();
                         }
-                        else MessageBox.Show("Sale not found.");
+                        else MessageBox.Show("Продаж не знайдено.");
                     }
                     else
                     {
-                        MessageBox.Show("Enter a valid sales id.");
+                        MessageBox.Show("Введіть коректний номер продажу.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("All fields must be filled in!");
+                    MessageBox.Show("Всі поля повинні бути заповнені!");
                 }
             }
             catch (Exception exception)

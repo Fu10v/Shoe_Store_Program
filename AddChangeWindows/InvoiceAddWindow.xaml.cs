@@ -36,14 +36,14 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Add";
+            btnAddChange.Content = "Додати";
         }
 
         public InvoiceAddWindow(Object invoiceA)
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
             invoice = (Invoice)invoiceA;
             cbEmployee.Text = invoice.Employee;
             cbSupplier.Text = invoice.Customer;
@@ -77,9 +77,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             {
                 if (cbEmployee.Text != "" && txtTimeOfSale.Text != "" && cbSupplier.Text != "")
                 {
-                    DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale);
-
-                    if (timeOfSale.ToString() != "01.01.0001 00:00:00")
+                    if (DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale))
                     {
                         int i1 = -1;
                         int i2 = -1;
@@ -105,17 +103,17 @@ namespace Shoe_Store_DB.AddChangeWindows
                         }
                         else
                         {
-                            MessageBox.Show("Incorrect employee or supplier.");
+                            MessageBox.Show("Неправильний працівник або постачальник.");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Incorrect date format.");
+                        MessageBox.Show("Неправильний формат дати.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Employee and time of sale must be filled in!");
+                    MessageBox.Show("Співробітник і час продажу обов'язкові!");
                 }
             }
             catch (Exception exception)
@@ -126,13 +124,13 @@ namespace Shoe_Store_DB.AddChangeWindows
 
         private void txtTimeOfSale_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtTimeOfSale.Text != "" && txtTimeOfSale.Text != "dd.mm.yyyy hh:mm")
+            if (txtTimeOfSale.Text != "" && txtTimeOfSale.Text != "дд.мм.рррр гг:хм")
             {
                 txtTimeOfSale.Foreground = Brushes.Black;
             }
             else
             {
-                txtTimeOfSale.Text = "dd.mm.yyyy hh:mm";
+                txtTimeOfSale.Text = "дд.мм.рррр гг:хм";
                 txtTimeOfSale.Foreground = Brushes.Gray;
             }
         }

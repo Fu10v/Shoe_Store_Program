@@ -26,14 +26,13 @@ namespace Shoe_Store_DB.AddChangeWindows
         public CustomerAddWindow()
         {
             InitializeComponent();
-            btnAddChange.Content = "Add";
-            txtDiscountAccumulation.Text = "3000";
+            btnAddChange.Content = "Додати";
         }
         public CustomerAddWindow(Object customerA)
         {
             InitializeComponent();
             customer = (Customer)customerA;
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
             view = true;
             string[] name = customer.Name.Split(' ');
             txtFirstName.Text = name[0];
@@ -68,18 +67,26 @@ namespace Shoe_Store_DB.AddChangeWindows
                     
                     if (long.TryParse(txtPhoneNumber.Text, out long number1) && long.TryParse(txtDiscountId.Text, out long number2) && int.TryParse(txtDiscountAccumulation.Text, out int number3))
                     {
-                        if (view == false) CustomerDA.CustomerAdd(txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
-                        else CustomerDA.CustomerChange(customer.Id, txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
-                        this.Close();
+                        if (txtPhoneNumber.Text.Length == 9)
+                        {
+                            if (txtDiscountId.Text.Length == 12)
+                            {
+                                if (view == false) CustomerDA.CustomerAdd(txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
+                                else CustomerDA.CustomerChange(customer.Id, txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
+                                this.Close();
+                            }
+                            else MessageBox.Show("Номер дисконтної карти повинен складатися з 12 цифр.");
+                        }
+                        else MessageBox.Show("Номер телефону повинен складатися з 9 цифр.");
                     }
                     else
                     {
-                        MessageBox.Show("Enter a valid phone number, discoun card id, discount card accumulation.");
+                        MessageBox.Show("Введіть коректний номер телефону, ідентифікатор дисконтної картки та накопичення.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("All fields must be filled in!");
+                    MessageBox.Show("Всі поля повинні бути заповнені!");
                 }
             }
             catch (Exception exception)

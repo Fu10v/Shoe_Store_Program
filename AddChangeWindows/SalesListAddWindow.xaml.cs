@@ -23,15 +23,22 @@ namespace Shoe_Store_DB.AddChangeWindows
     public partial class SalesListAddWindow : Window
     {
         int salesId;
+        int i1 = -1;
         bool view = false;
         List<Product> products = ProductDA.RetrieveAllProducts();
+        List<ProductQuantity> productQuantitys;
+        List<Classes.Color> colors = ColorDA.RetrieveAllColors();
+        List<Classes.Size> sizes = SizeDA.RetrieveAllSizes();
         SalesList salesList;
         public ObservableCollection<string> cb1 { get; set; }
+        public ObservableCollection<string> cb2 { get; set; }
+        public ObservableCollection<string> cb3 { get; set; }
+
         public SalesListAddWindow(int salesId)
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Add";
+            btnAddChange.Content = "Додати";
             this.salesId = salesId;
         }
 
@@ -39,17 +46,23 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
             view = true;
             this.salesId = salesId;
             salesList = (SalesList)salesListA;
-            cbProduct.Text = salesList.Product;
+            cbProduct.Text = salesList.Product.ToString();
             txtQuantity.Text = salesList.Quantity.ToString();
+            txtPrice.Text = salesList.Price.ToString();
+            cbSize.Text = salesList.Size.ToString();
+            cbColor.Text = salesList.Color.ToString();
         }
 
         private void UpdateLists()
         {
             cb1 = new ObservableCollection<string>(ProductDA.RetrieveAllProducts().Select(product => product.Name));
+            cb2 = new ObservableCollection<string>(SizeDA.RetrieveAllSizes().Select(product => product.Name));
+            cb3 = new ObservableCollection<string>(ColorDA.RetrieveAllColors().Select(product => product.Name));
+            DataContext = null;
             DataContext = this;
         }
 
@@ -71,43 +84,65 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             try
             {
-                if (cbProduct.Text != "" && txtQuantity.Text != "")
+                if (cbProduct.Text != "" && txtQuantity.Text != "" && cbSize.Text != "" && cbColor.Text!= "" && txtPrice.Text != "")
                 {
                     if (int.TryParse(txtQuantity.Text, out int quantity) && quantity >= 0)
                     {
-                        int i1 = -1;
-                        foreach (Classes.Product product in products)
+                        if (int.TryParse(txtPrice.Text, out int price) && price >= 0)
                         {
-                            if (product.Name == cbProduct.Text)
+                            int i2 = -1;
+                            foreach (Classes.ProductQuantity productQuantity in productQuantitys)
                             {
-                                i1 = product.Id;
+                                if (productQuantity.ProductId == i1 && productQuantity.Size == cbSize.Text && productQuantity.Color == cbColor.Text)
+                                {
+                                    i2 = productQuantity.Id;
+                                    break;
+                                }
                             }
+                            if (i1 != -1 && i2 != -1)
+                            {
+                                if (view == false) SalesListDA.SalesListAdd(salesId, i2, price, quantity);
+                                else SalesListDA.SalesListChange(salesList.Id, salesId, i2, price, quantity);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Продукт не знайдено");
+                            }
+
                         }
-                        if (i1 != -1)
-                        {
-                            if (view == false) SalesListDA.SalesListAdd(salesId, i1, quantity);
-                            else SalesListDA.SalesListChange(salesList.Id, salesId, i1, quantity);
-                            this.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Incorrect product.");
-                        }
+                        else MessageBox.Show("Введіть позитивне число або 0 для ціни.");
                     }
                     else
                     {
-                        MessageBox.Show("Please enter only positive numeric or 0 for quantity.");
+                        MessageBox.Show("Введіть позитивне число або 0 для кількості.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("All fields must be filled in!");
+                    MessageBox.Show("Всі поля повинні бути заповнені!");
                 }
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void cbProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedProduct = cbProduct.SelectedValue.ToString();
+            i1 = -1;
+            foreach (Classes.Product product in products)
+            {
+                if (product.Name == selectedProduct)
+                {
+                    i1 = product.Id;
+                }
+            }
+            productQuantitys = ProductQuantityDA.RetrieveProductQuantity(i1);
+            cbSize.ItemsSource = new ObservableCollection<string>(ProductQuantityDA.RetrieveProductQuantity(i1).Select(productQuantity => productQuantity.Size));
+            cbColor.ItemsSource = new ObservableCollection<string>(ProductQuantityDA.RetrieveProductQuantity(i1).Select(productQuantity => productQuantity.Color));
         }
     }
 }

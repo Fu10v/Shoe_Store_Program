@@ -8,7 +8,7 @@
         Title="InvoiceAddWindow" Height="450" Width="370" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="#00000000" MouseDown="Window_MouseDown">
     <Grid Background="Transparent">
-        <Border CornerRadius="16" Background="White"  BorderThickness="2" BorderBrush="Black"
+        <Border CornerRadius="0" Background="White"  BorderThickness="2" BorderBrush="Black"
                 Opacity="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -36,17 +36,17 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Employee" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Співробітник" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <ComboBox x:Name="cbEmployee" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                                   Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" IsEditable="True" 
                                   Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
-                        <TextBlock Text="Supply time" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Час поставки" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtTimeOfSale" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Gray" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
-                                 Cursor="IBeam" TextChanged="txtTimeOfSale_TextChanged" Text="dd.mm.yyyy hh:mm"/>
+                                 Cursor="IBeam" TextChanged="txtTimeOfSale_TextChanged" Text="дд.мм.рррр гг:хм"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <TextBlock Text="Supplier" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Постачальник" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <ComboBox x:Name="cbSupplier" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                                   Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" IsEditable="True" 
                                   Padding="0,0,0,0" ItemsSource="{Binding cb2}"/>

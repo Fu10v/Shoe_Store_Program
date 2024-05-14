@@ -19,7 +19,7 @@ namespace Shoe_Store_DB.DA_Layer
 
         public static List<Customer> RetrieveAllCustomers()
         {
-            string query = "SELECT customer_id, concat(customer_first_name, ' ', customer_surname, ' ',customer_middle_name) as customer_name, customer_phone_number, customer_email, discount_card_id, discount_card_accumulation FROM customer order by 1;";
+            string query = "SELECT customer_id, concat(customer_first_name, ' ', customer_surname, ' ',customer_middle_name) as customer_name, customer_phone_number, customer_email, discount_card_id, discount_card_accumulation FROM customer order by customer_name;";
             cmd = DBHelper.RunQuery(query);
             List<Customer> customers = new List<Customer>();
             if (cmd != null)
@@ -43,7 +43,7 @@ namespace Shoe_Store_DB.DA_Layer
         }
         public static List<Customer> CustomerSearch(string search)
         {
-            string query = "SELECT customer_id, concat(customer_first_name, ' ', customer_surname, ' ',customer_middle_name) as customer_name, customer_phone_number, customer_email, discount_card_id, discount_card_accumulation FROM customer where customer_first_name like @searchParameter or customer_surname like @searchParameter or customer_middle_name like @searchParameter or customer_phone_number like @searchParameter or customer_email like @searchParameter or discount_card_id like @searchParameter or discount_card_accumulation like @searchParameter order by 1;";
+            string query = "SELECT customer_id, concat(customer_first_name, ' ', customer_surname, ' ',customer_middle_name) as customer_name, customer_phone_number, customer_email, discount_card_id, discount_card_accumulation FROM customer where customer_first_name like @searchParameter or customer_surname like @searchParameter or customer_middle_name like @searchParameter or customer_phone_number like @searchParameter or customer_email like @searchParameter or discount_card_id like @searchParameter or discount_card_accumulation like @searchParameter order by customer_name;";
             cmd = DBHelper.RunQuerySearch(query, search);
             List<Customer> customers = new List<Customer>();
             if (cmd != null)

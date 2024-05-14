@@ -8,7 +8,7 @@
         Title="SupplierAddWindow" Height="450" Width="370" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="#00000000" MouseDown="Window_MouseDown">
     <Grid Background="Transparent">
-        <Border CornerRadius="16" Background="White"  BorderThickness="2" BorderBrush="Black"
+        <Border CornerRadius="0" Background="White"  BorderThickness="2" BorderBrush="Black"
                 Opacity="1">
             <Grid>
                 <Grid.RowDefinitions>
@@ -36,43 +36,43 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Name" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Назва" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtName" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="First phone number" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Перший номер телефону" Foreground="Black" FontSize="14" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtFPhoneNumber" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
 
-                        <TextBlock Text="Email" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,0,0"/>
+                        <TextBlock Text="Електронна пошта" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,0,0"/>
                         <TextBox x:Name="txtEmail" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="Current account" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Розрахунковий рахунок" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtCurrentAccount" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                 BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                 Cursor="IBeam"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <TextBlock Text="ERDPOU code" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Код ЄРДПОУ" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <TextBox x:Name="txtErdpouCode" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" Padding="0,0,0,0"
                                  Cursor="IBeam"/>
-                        <TextBlock Text="Second phone number" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Другий номер телефону" Foreground="Black" FontSize="14" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <TextBox x:Name="txtSPhoneNumber" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
          BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" Padding="0,0,0,0"
          Cursor="IBeam"/>
-                        <TextBlock Text="Address" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                        <TextBlock Text="Адреса" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
                         <TextBox x:Name="txtAddress" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" CaretBrush="Black"
 BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="5,5,0,0" Padding="0,0,0,0"
 Cursor="IBeam"/>
                     </StackPanel>
                 </Grid>
-                <TextBlock Name="txtMessage" Grid.Row="2" Text="All fields must be filled in." Foreground="Red" FontSize="15" FontWeight="Medium"
+                <TextBlock Name="txtMessage" Grid.Row="2" Text="Усі поля мають бути заповнені." Foreground="Red" FontSize="15" FontWeight="Medium"
                            FontFamily="Montserrat" Margin=" 5, 0, 0, 0"/>
                 <Grid Grid.Row="3">
-                    <Button Name="btnAddChange" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Add" Margin="0,5,0,5" 
+                    <Button Name="btnAddChange" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Додати" Margin="0,5,0,5" 
         FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAddChange_Click"/>
 
                 </Grid>

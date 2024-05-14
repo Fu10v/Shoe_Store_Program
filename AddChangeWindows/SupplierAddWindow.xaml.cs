@@ -26,14 +26,14 @@ namespace Shoe_Store_DB.AddChangeWindows
         public SupplierAddWindow()
         {
             InitializeComponent();
-            btnAddChange.Content = "Add";
+            btnAddChange.Content = "Додати";
         }
 
         public SupplierAddWindow(Object supplierA)
         {
             InitializeComponent();
             supplier = (Supplier)supplierA;
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
             view = true;
             txtName.Text = supplier.Name;
             txtErdpouCode.Text = supplier.Edrpou_Code.ToString();
@@ -65,24 +65,37 @@ namespace Shoe_Store_DB.AddChangeWindows
             {
                 if (txtErdpouCode.Text != "" && txtFPhoneNumber.Text != "" && txtCurrentAccount.Text != "")
                 {
-
+                    
                     if (long.TryParse(txtErdpouCode.Text, out long number1) && long.TryParse(txtFPhoneNumber.Text, out long number2) && long.TryParse(txtCurrentAccount.Text, out long number3))
                     {
-                        long? number4;
-                        if (long.TryParse(txtSPhoneNumber.Text, out long number5) == false) number4 = null;
-                        else number4 = number5;
-                        if (view == false) SupplierDA.SupplierAdd(txtName.Text, number1, number2, number4, txtEmail.Text, txtAddress.Text, number3);
-                        else SupplierDA.SupplierChange(supplier.Id, txtName.Text, number1, number2, number4, txtEmail.Text, txtAddress.Text, number3);
-                        this.Close();
+                        if (txtFPhoneNumber.Text.Length == 9)
+                        {
+                            long? number4;
+                            if (long.TryParse(txtSPhoneNumber.Text, out long number5) == false) number4 = null;
+                            else number4 = number5;
+                            if (number4 != null && txtSPhoneNumber.Text.Length != 9)
+                                MessageBox.Show("Номер телефону повинен складатися з 9 цифр.");
+                            else
+                            {
+                                if (txtErdpouCode.Text.Length == 8)
+                                {
+                                    if (view == false) SupplierDA.SupplierAdd(txtName.Text, number1, number2, number4, txtEmail.Text, txtAddress.Text, number3);
+                                    else SupplierDA.SupplierChange(supplier.Id, txtName.Text, number1, number2, number4, txtEmail.Text, txtAddress.Text, number3);
+                                    this.Close();
+                                }
+                                else MessageBox.Show("Код ЄРДПОУ повинен складатися з 8 цифр.");
+                            }
+                        }
+                        else MessageBox.Show("Номер телефону повинен складатися з 9 цифр.");
                     }
                     else
                     {
-                        MessageBox.Show("Enter a valid phone number, ERDPOU code, current account.");
+                        MessageBox.Show("Введіть коректний номер телефону, код ЄРДПОУ, поточний рахунок.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("First phone number, ERDPOU code, current account must be filled in!");
+                    MessageBox.Show("Перший телефон, код ЄРДПОУ, розрахунковий рахунок обов'язкові!");
                 }
             }
             catch (Exception exception)

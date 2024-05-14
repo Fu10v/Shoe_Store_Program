@@ -37,14 +37,14 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Add";
+            btnAddChange.Content = "Додати";
         }
 
         public SalesAddWindow(Object salesA)
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
             sales = (Sales)salesA;
             cbEmployee.Text = sales.Employee;
             cbCustomer.Text = sales.Customer;
@@ -79,9 +79,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             {
                 if (cbEmployee.Text != "" && txtTimeOfSale.Text != "" )
                 {
-                    DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale);
-
-                    if (timeOfSale.ToString() != "01.01.0001 00:00:00")
+                    if (DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale))
                     {
                         int i1 = -1;
                         int i2 = -1;
@@ -103,7 +101,7 @@ namespace Shoe_Store_DB.AddChangeWindows
                         {
                             if (i2 == -1 && cbCustomer.Text != "")
                             {
-                                MessageBox.Show("Incorrect customer.");
+                                MessageBox.Show("Клієнта не знайдено");
                             }
                             else
                             {
@@ -124,17 +122,17 @@ namespace Shoe_Store_DB.AddChangeWindows
                         }
                         else
                         {
-                            MessageBox.Show("Incorrect employee.");
+                            MessageBox.Show("Співробітника не знайдено.");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Incorrect date format.");
+                        MessageBox.Show("Неправильний формат дати.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Employee and time of sale must be filled in!");
+                    MessageBox.Show("Співробітник і час продажу обов'язкові!");
                 }
             }
             catch (Exception exception)

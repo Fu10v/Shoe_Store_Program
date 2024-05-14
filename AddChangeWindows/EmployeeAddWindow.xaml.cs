@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace Shoe_Store_DB.AddChangeWindows
 {
@@ -33,7 +32,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Add";
+            btnAddChange.Content = "Додати";
         }
 
         public EmployeeAddWindow(Object employeeA)
@@ -41,7 +40,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             InitializeComponent();
             employee = (Employee)employeeA;
             UpdateLists();
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
             view = true;
             string[] name = employee.Name.Split(' ');
             txtFirstName.Text = name[0];
@@ -87,23 +86,33 @@ namespace Shoe_Store_DB.AddChangeWindows
             {
                 if (cbPosition.Text != "" && cbGender.Text != "" && dpDate.SelectedDate.HasValue)
                 {
-                    long.TryParse(txtPhoneNumber.Text, out long number);
-                    if (number >= 0)
+                    
+                    if (long.TryParse(txtPhoneNumber.Text, out long number) && number >= 0)
                     {
-                        DateTime? date = null;
-                        if (dpDate.SelectedDate.HasValue) date = (DateTime)dpDate.SelectedDate;
-                        if (view == false) EmployeeDA.EmployeeAdd(txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, cbPosition.Text, number, txtEmail.Text, txtAddress.Text, cbGender.Text, date);
-                        else EmployeeDA.EmployeeChange( employee.Id, txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, cbPosition.Text, number, txtEmail.Text, txtAddress.Text, cbGender.Text, date);
-                        this.Close();
+                        if (txtPhoneNumber.Text.Length == 9)
+                        {
+                            DateTime? date = null;
+                            if (dpDate.SelectedDate.HasValue) date = (DateTime)dpDate.SelectedDate;
+                            if ((date != null && date > DateTime.Now))
+                                MessageBox.Show("Невірна дата.");
+                            else
+                            {
+                                if (view == false) EmployeeDA.EmployeeAdd(txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, cbPosition.Text, number, txtEmail.Text, txtAddress.Text, cbGender.Text, date);
+                                else EmployeeDA.EmployeeChange(employee.Id, txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, cbPosition.Text, number, txtEmail.Text, txtAddress.Text, cbGender.Text, date);
+                                this.Close();
+                            }
+                        }
+                        else MessageBox.Show("Номер телефону повинен складатися з 9 цифр.");
+                        
                     }
                     else
                     {
-                        MessageBox.Show("Enter a valid phone number or 0 if the employee does not have a phone number.");
+                        MessageBox.Show("Введіть коректний номер телефону або 0, якщо у працівника немає номера телефону.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("All fields must be filled in!");
+                    MessageBox.Show("Всі поля повинні бути заповнені!");
                 }
             }
             catch (Exception exception)

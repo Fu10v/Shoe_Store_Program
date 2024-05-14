@@ -33,6 +33,8 @@ namespace Shoe_Store_DB.Views
         int productId;
         Style styleButton;
 
+        Product product;
+
         public string[] cb1 { get; set; }
         public ObservableCollection<string> cb2 { get; set; }
         public ObservableCollection<string> cb3 { get; set; }
@@ -45,6 +47,7 @@ namespace Shoe_Store_DB.Views
         public ProductView()
         {
             InitializeComponent();
+            dataGridProduct.Items.Clear();
             dataGridProduct.ItemsSource = ProductDA.RetrieveAllProducts();
             view = true;
             styleButton = btnInfo.Style;
@@ -61,6 +64,7 @@ namespace Shoe_Store_DB.Views
             cb5 = new String[] { "зима", "весна", "літо", "осінь", "демісезон", "всесезон" };
             cb6 = new ObservableCollection<string>(ColorDA.RetrieveAllColors().Select(color => color.Name));
             cb7 = new ObservableCollection<string>(SizeDA.RetrieveAllSizes().Select(size => size.Name));
+            DataContext = null;
             DataContext = this;
         }
 
@@ -113,7 +117,8 @@ namespace Shoe_Store_DB.Views
             {
                 if (dataGridProduct.SelectedItem != null)
                 {
-                    Product product = (Product)dataGridProduct.SelectedItem;
+                    DataGridColumns2();
+                    product = (Product)dataGridProduct.SelectedItem;
                     dataGridProduct.ItemsSource = ProductQuantityDA.RetrieveProductQuantity(product.Id);
                     productId = product.Id;
                     ButtonInfoDisabled();
@@ -128,6 +133,7 @@ namespace Shoe_Store_DB.Views
 
         private void btnShowAll_Click(object sender, RoutedEventArgs e)
         {
+            DataGridColumns1();
             dataGridProduct.ItemsSource = ProductDA.RetrieveAllProducts();
             ButtonInfoEnabled();
             UpdateLists();
@@ -221,29 +227,35 @@ namespace Shoe_Store_DB.Views
             cbSeason.Text= string.Empty;
             cbColor.Text= string.Empty;
             cbSize.Text= string.Empty;
-            txtPriceFrom.Text= "from";
+            txtPriceFrom.Text= "від";
             txtPriceFrom.Foreground = Brushes.Gray;
-            txtPriceTo.Text= "to";
+            txtPriceTo.Text= "до";
             txtPriceTo.Foreground = Brushes.Gray;
+            txtQuantityFrom.Text = "від";
+            txtQuantityFrom.Foreground = Brushes.Gray;
+            txtQuantityTo.Text = "до";
+            txtQuantityTo.Foreground = Brushes.Gray;
         }
 
         private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
         {
-            if (cbGender.Text != "" || cbType.Text != "" || cbBrand.Text != "" || cbMaterial.Text != "" || cbSeason.Text != "" || cbColor.Text != "" || cbSize.Text !="" || (txtPriceFrom.Text != "" && txtPriceFrom.Text != "from") || (txtPriceTo.Text != "" && txtPriceTo.Text != "from"))
+            if (cbGender.Text != "" || cbType.Text != "" || cbBrand.Text != "" || cbMaterial.Text != "" || cbSeason.Text != "" || cbColor.Text != "" || cbSize.Text !="" || (txtPriceFrom.Text != "" && txtPriceFrom.Text != "від") || (txtPriceTo.Text != "" && txtPriceTo.Text != "до") || (txtQuantityFrom.Text != "" && txtQuantityFrom.Text != "від") || (txtQuantityTo.Text != "" && txtQuantityTo.Text != "до"))
             {
                
-                if ((double.TryParse(txtPriceFrom.Text, out double number1)== false && txtPriceFrom.Text != "" && txtPriceFrom.Text != "from") || (double.TryParse(txtPriceTo.Text, out double number2) == false && txtPriceTo.Text != "" && txtPriceTo.Text != "to"))
+                if (((double.TryParse(txtPriceFrom.Text, out double number1) && number1 >= 0 && (txtPriceTo.Text == "до" || txtPriceTo.Text == "")) || (double.TryParse(txtPriceTo.Text, out double number2) && number2 >= 0 && (txtPriceFrom.Text == "від" || txtPriceFrom.Text == "")) || (double.TryParse(txtPriceFrom.Text, out number1) && double.TryParse(txtPriceTo.Text, out number2)) || ((txtPriceFrom.Text == "від" || txtPriceFrom.Text == "") && (txtPriceTo.Text == "до" || txtPriceTo.Text == ""))) && ((double.TryParse(txtQuantityFrom.Text, out double number3) && number3 >= 0 && (txtQuantityTo.Text == "до" || txtQuantityTo.Text == "")) || (double.TryParse(txtQuantityTo.Text, out double number4) && number4 >= 0 && (txtQuantityFrom.Text == "від" || txtQuantityFrom.Text == "")) || (double.TryParse(txtQuantityFrom.Text, out number3) && double.TryParse(txtQuantityTo.Text, out number4)) || ((txtQuantityFrom.Text == "від" || txtQuantityFrom.Text == "") && (txtQuantityTo.Text == "до" || txtQuantityTo.Text == ""))))
                 {
-                    MessageBox.Show("Enter only positive numbers in the price fields!");
+                    DataGridColumns1();
+                    dataGridProduct.ItemsSource = ProductDA.ProductFilter(cbGender.Text, cbType.Text, cbBrand.Text, cbMaterial.Text, cbSeason.Text, cbColor.Text, cbSize.Text, txtPriceFrom.Text, txtPriceTo.Text, txtQuantityFrom.Text, txtQuantityTo.Text);
+                    ButtonInfoEnabled();
                 }
                 else
                 {
-                    dataGridProduct.ItemsSource = ProductDA.ProductFilter(cbGender.Text, cbType.Text, cbBrand.Text, cbMaterial.Text, cbSeason.Text, cbColor.Text, cbSize.Text, txtPriceFrom.Text, txtPriceTo.Text);
-                    ButtonInfoEnabled();
+                    MessageBox.Show("У полях ціни та кількості вводьте тільки позитивні числа!");
                 }
             }
             else
             {
+                DataGridColumns1();
                 dataGridProduct.ItemsSource = ProductDA.RetrieveAllProducts();
                 ButtonInfoEnabled();
             }
@@ -259,6 +271,87 @@ namespace Shoe_Store_DB.Views
             txtPriceTo.Foreground = Brushes.Black;
         }
 
+        private void txtQuantityFrom_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtQuantityFrom.Foreground = Brushes.Black;
+        }
+
+        private void txtQuantityTo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtQuantityTo.Foreground = Brushes.Black;
+        }
+
+        private void DataGridColumns1()
+        {
+            var columns = new List<DataGridColumn>
+            {
+            new DataGridTextColumn { Header = "Назва", Binding = new Binding("Name") },
+            new DataGridTextColumn { Header = "Стать", Binding = new Binding("Gender") },
+            new DataGridTextColumn { Header = "Тип", Binding = new Binding("Type") },
+            new DataGridTextColumn { Header = "Бренд", Binding = new Binding("Brand") },
+            new DataGridTextColumn { Header = "Матеріал", Binding = new Binding("Material") },
+            new DataGridTextColumn { Header = "Сезон", Binding = new Binding("Season") },
+            new DataGridTextColumn { Header = "Кольори", Binding = new Binding("Colors") },
+            new DataGridTextColumn { Header = "Розміри", Binding = new Binding("Sizes") },
+            new DataGridTextColumn { Header = "Ціна, грн", Binding = new Binding("Price") },
+            new DataGridTextColumn { Header = "Кількість", Binding = new Binding("Quantity") }
+            };
+
+            // Очищаємо поточні стовпці
+            dataGridProduct.Columns.Clear();
+
+            // Додаємо нові стовпці до DataGrid
+            foreach (var column in columns)
+            {
+                dataGridProduct.Columns.Add(column);
+            }
+        }
+        private void DataGridColumns2()
+        {
+            var columns = new List<DataGridColumn>
+            {
+            new DataGridTextColumn { Header = "Колір", Binding = new Binding("Color") },
+            new DataGridTextColumn { Header = "Розмір", Binding = new Binding("Size") },
+            new DataGridTextColumn { Header = "Кількість", Binding = new Binding("Quantity") }
+            };
+
+            // Очищаємо поточні стовпці
+            dataGridProduct.Columns.Clear();
+
+            // Додаємо нові стовпці до DataGrid
+            foreach (var column in columns)
+            {
+                dataGridProduct.Columns.Add(column);
+            }
+        }
+
+        private void btnAddToOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridProduct.SelectedItem != null)
+            {
+                try
+                {
+                    if (view == true)
+                    {
+                        DataGridColumns2();
+                        product = (Product)dataGridProduct.SelectedItem;
+                        dataGridProduct.ItemsSource = ProductQuantityDA.RetrieveProductQuantity(product.Id);
+                        productId = product.Id;
+                        ButtonInfoDisabled();
+                    }
+                    else
+                    {
+                        ProductQuantity productQuantity = (ProductQuantity)dataGridProduct.SelectedItem;
+                        QuantityWindow quantityWindow = new QuantityWindow(dataGridProduct.SelectedItem, product);
+                        quantityWindow.Show();
+                    }
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+            }
+        }
     }
 
 }

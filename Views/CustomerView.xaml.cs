@@ -58,24 +58,24 @@ namespace Shoe_Store_DB.Views
 
         private void btnResetFilter_Click(object sender, RoutedEventArgs e)
         {
-            txtFrom.Text = "from";
+            txtFrom.Text = "від";
             txtFrom.Foreground = Brushes.Gray;
-            txtTo.Text = "to";
+            txtTo.Text = "до";
             txtTo.Foreground = Brushes.Gray;
         }
 
         private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
         {
 
-            if ((txtFrom.Text != "from" && txtFrom.Text != "") || (txtTo.Text != "from" && txtTo.Text != ""))
+            if ((txtFrom.Text != "від" && txtFrom.Text != "") || (txtTo.Text != "до" && txtTo.Text != ""))
             {
-                if ((double.TryParse(txtFrom.Text, out double number1) == false && txtFrom.Text != "" && txtFrom.Text != "from") || (double.TryParse(txtTo.Text, out double number2) == false && txtTo.Text != "" && txtTo.Text != "to"))
+                if ((double.TryParse(txtFrom.Text, out double number1) && number1 >= 0 && (txtTo.Text == "до" || txtTo.Text == "")) || (double.TryParse(txtTo.Text, out double number2) && number2 >= 0 && (txtFrom.Text == "від" || txtFrom.Text == "")) || (double.TryParse(txtFrom.Text, out number1) && double.TryParse(txtTo.Text, out number2)) || ((txtFrom.Text == "від" || txtFrom.Text == "") && (txtTo.Text == "до" || txtTo.Text == "")))
                 {
-                    MessageBox.Show("Enter only positive numbers in the price fields!");
+                    dataGrid.ItemsSource = CustomerDA.CustomerFilter(txtFrom.Text, txtTo.Text);
                 }
                 else
                 {
-                    dataGrid.ItemsSource = CustomerDA.CustomerFilter(txtFrom.Text, txtTo.Text);
+                    MessageBox.Show("У полях вводьте тільки позитивні числа!");
                 }
             }
             else dataGrid.ItemsSource = CustomerDA.RetrieveAllCustomers();

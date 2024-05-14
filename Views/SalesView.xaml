@@ -14,15 +14,15 @@
         <Grid Grid.Row="0">
             <Border>
                 <StackPanel>
-                    <TextBlock Text="Filter" FontSize="18" FontWeight="Medium" FontFamily="Montserrat"
+                    <TextBlock Text="Фільтр" FontSize="18" FontWeight="Medium" FontFamily="Montserrat"
            Foreground="Black" Margin="5,5"></TextBlock>
                     <StackPanel Orientation="Horizontal" Height="50" Margin="5,0,0,0">
-                        <TextBlock Text="Searсh here: " FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                        <TextBlock Text="Пошук: " FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
                  Foreground="Black" Margin="0,5,0,0" VerticalAlignment="Center"></TextBlock>
                         <TextBox x:Name="txtSearch" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
              Foreground="Black" CaretBrush="Black" BorderBrush="Black" BorderThickness="0,0,0,2" Cursor="IBeam"
              Height="28" Width="400" VerticalContentAlignment="Center" Margin="0,5,0,0" Padding="0,0,0,0" TextChanged="txtSearch_TextChanged"/>
-                        <TextBlock Text="Note: date format: yyyy-mm-dd, time format: hh:mm:ss" Grid.Column="0" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                        <TextBlock Text="Примітка: формат дати: рррр-мм-дд, формат часу: гг:хх:сс" Grid.Column="0" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
 Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan="2"></TextBlock>
                     </StackPanel>
                     <Grid>
@@ -33,28 +33,37 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="Employee" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <TextBlock Text="Співробітник" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <ComboBox x:Name="cbEmployee" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                              Height="28" VerticalContentAlignment="Center" Margin="5,5,10,5" IsEditable="True"
                              Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
-                            <TextBlock Text="Product" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <TextBlock Text="Продукт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <ComboBox x:Name="cbProduct" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                               Height="28" VerticalContentAlignment="Center" Margin="5,5,10,0" IsEditable="True"
                               Padding="0,0,0,0" ItemsSource="{Binding cb3}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <TextBlock Text="Customer" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <TextBlock Text="Постійни клієнт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <ComboBox x:Name="cbCustomer" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                               Height="28" VerticalContentAlignment="Center" Margin="5,5,10,5" IsEditable="True" 
                               Padding="0,0,0,0" ItemsSource="{Binding cb2}"/>
+                            <TextBlock Text="Загальна сума" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="txtQuantityFrom" Text="від" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                                     Foreground="Gray" CaretBrush="Black" BorderBrush="Black" BorderThickness="0,0,0,2" Cursor="IBeam"
+                                     Height="28" Width="150" VerticalContentAlignment="Center" Margin="5,5,5,0" Padding="0,0,0,0" TextChanged="txtQuantityFrom_TextChanged"/>
+                                <TextBox x:Name="txtQuantityTo" Text="до" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                                     Foreground="Gray" CaretBrush="Black" BorderBrush="Black" BorderThickness="0,0,0,2" Cursor="IBeam"
+                                     Height="28" Width="150" VerticalContentAlignment="Center" Margin="5,5,5,0" Padding="0,0,0,0" TextChanged="txtQuantityTo_TextChanged"/>
+                            </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                            <TextBlock Text="Date of sale from" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <TextBlock Text="Дата продажу від" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <DatePicker Name="dpDateFrom" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,10,5" Height="28" BorderThickness="1" BorderBrush="Black"
                                         CalendarStyle="{StaticResource DatePickerCalendarStyle}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="3">
-                            <TextBlock Text="Date of sale to" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <TextBlock Text="Дата продажу до" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <DatePicker Name="dpDateTo" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,10,5" Height="28" BorderThickness="1" BorderBrush="Black"
                                         CalendarStyle="{StaticResource DatePickerCalendarStyle}"/>
                         </StackPanel>
@@ -66,19 +75,22 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
                             <ColumnDefinition Width="160"/>
                             <ColumnDefinition Width="160"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="To sort, click on the column headings." Grid.Column="0" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                        <TextBlock Text="Для сортування клацніть на заголовки стовпців." Grid.Column="0" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
                Foreground="Black" Margin="5,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan="2"></TextBlock>
-                        <Button Name="btnApplyFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="3" HorizontalAlignment="Center" Content="Apply" Margin="0,5,0,5" 
+                        <Button Name="btnApplyFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="3" HorizontalAlignment="Center" Content="Застосувати" Margin="0,5,0,5" 
                 FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnApplyFilter_Click"/>
-                        <Button Name="btnResetFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="2" HorizontalAlignment="Center" Content="Reset" Margin="0,5,0,5" 
+                        <Button Name="btnResetFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="2" HorizontalAlignment="Center" Content="Скинути" Margin="0,5,0,5" 
                 FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnResetFilter_Click"/>
                     </Grid>
                 </StackPanel>
             </Border>
         </Grid>
         <Grid Grid.Row="1">
-            <Border CornerRadius="10" BorderBrush="Black" BorderThickness="2"
-        Grid.Column="0" Background="#EFF2F7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="10" BorderBrush="Black" BorderThickness="2" Background="#EFF2F7">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -86,29 +98,48 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel>
-                            <DataGrid Name="dataGrid" Height="550" Width="1331" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-                                  CellStyle="{DynamicResource DataGridCellStyle1}" Style="{DynamicResource DataGridStyle1}">
+                            <DataGrid Name="dataGrid" Height="545" Width="1085" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+          CellStyle="{DynamicResource DataGridCellStyle1}" Style="{DynamicResource DataGridStyle1}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Номер продажу" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Співробітник" Binding="{Binding Employee}"/>
+                                    <DataGridTextColumn Header="Клієнт" Binding="{Binding Customer}"/>
+                                    <DataGridTextColumn Header="Дата та час продажу" Binding="{Binding TimeOfSale}"/>
+                                    <DataGridTextColumn Header="Проданий товар" Binding="{Binding SoldItems}"/>
+                                    <DataGridTextColumn Header="Загальна сума" Binding="{Binding Total}"/>
+                                </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
+
+                       
                     </Grid>
                     <Grid Grid.Row="1">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name="btnShowSales" Style="{StaticResource ellipseBlackButton}" Content="Update sales" Margin="5" 
-                                FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnShowSales_Click"/>
-                            <Button Name="btnInfo" Style="{StaticResource ellipseBlackButton}" Content="Show info" Margin="5" 
-                                FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnInfo_Click"/>
-                            <Button Name="btnAdd" Style="{StaticResource ellipseBlackButton}" Content="Add" Margin="5" 
-                                FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAdd_Click"/>
-                            <Button Name="btnChange" Style="{StaticResource ellipseBlackButton}" Content="Change selected row" Margin="5" 
-                                FontSize="14" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnChange_Click"/>
-                            <Button Name="btnDelete" Style="{StaticResource ellipseBlackButton}" Content="Delete" Margin="5" 
-                                FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnDelete_Click"/>
-                            <Button Name="showSalesSchedule" Style="{StaticResource ellipseBlackButton}" Content="Show sales schedule" Margin="5" 
-                                FontSize="14" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand"/>
-                        </StackPanel>
+                        <Border>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Name="btnShowSales" Style="{StaticResource ellipseBlackButton}" Content="Оновити" Margin="5" 
+        FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnShowSales_Click"/>
+                                <Button Name="btnInfo" Style="{StaticResource ellipseBlackButton}" Content="Показати дані" Margin="5" 
+        FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnInfo_Click"/>
+                                <Button Name="btnAdd" Style="{StaticResource ellipseBlackButton}" Content="Додати" Margin="5" 
+        FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAdd_Click"/>
+                                <Button Name="btnChange" Style="{StaticResource ellipseBlackButton}" Content="Змінити" Margin="5" 
+        FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnChange_Click"/>
+                                <Button Name="btnDelete" Style="{StaticResource ellipseBlackButton}" Content="Видалити" Margin="5" 
+        FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnDelete_Click"/>
+                                <Button Name="showSalesSchedule" Style="{StaticResource ellipseBlackButton2}" Content="Показати графік продажу" Margin="5" 
+        FontSize="14" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand"/>
+                            </StackPanel>
+                        </Border>
                     </Grid>
+                    
                 </Grid>
             </Border>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Інформація" FontSize="18" FontWeight="Medium" FontFamily="Montserrat"
+Foreground="Black" Margin="5,5,0,0"></TextBlock>
+                <TextBlock x:Name="tbQuantity" Text="Кількість продажей: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+                <TextBlock x:Name="tbTotal" Text="Загальна сума: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

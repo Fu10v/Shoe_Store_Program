@@ -48,12 +48,14 @@ namespace Shoe_Store_DB.Views
             cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployees().Select(employee => employee.Name));
             cb2 = new ObservableCollection<string>(SupplierDA.RetrieveAllSuppliers().Select(supplier => supplier.Name));
             cb3 = new ObservableCollection<string>(ProductDA.RetrieveAllProducts().Select(product => product.Name));
+            DataContext = null;
             DataContext = this;
         }
 
 
         private void btnShowInvoices_Click(object sender, RoutedEventArgs e)
         {
+            DataGridColumns1();
             dataGrid.ItemsSource = InvoiceDA.RetrieveAllInvoices();
             ButtonInfoEnabled();
             UpdateLists();
@@ -65,6 +67,7 @@ namespace Shoe_Store_DB.Views
             {
                 if (dataGrid.SelectedItem != null)
                 {
+                    DataGridColumns2();
                     Invoice invoice = (Invoice)dataGrid.SelectedItem;
                     dataGrid.ItemsSource = SupplyListDA.RetrieveSupplyList(invoice.Id);
                     invoiceId = invoice.Id;
@@ -168,12 +171,20 @@ namespace Shoe_Store_DB.Views
                 if (dpDateFrom.SelectedDate.HasValue) dateFrom = (DateTime)dpDateFrom.SelectedDate;
                 DateTime? dateTo = null;
                 if (dpDateTo.SelectedDate.HasValue) dateTo = (DateTime)dpDateTo.SelectedDate;
-                dataGrid.ItemsSource = InvoiceDA.InvoiceFilter(cbEmployee.Text, cbSupplier.Text, dateFrom, dateTo, cbProduct.Text);
-                ButtonInfoEnabled();
+                if ((dateFrom != null && dateFrom > DateTime.Now) || (dateTo != null && dateTo > DateTime.Now))
+                    MessageBox.Show("Невірна дата.");
+                else
+                {
+                    DataGridColumns1();
+                    dataGrid.ItemsSource = InvoiceDA.InvoiceFilter(cbEmployee.Text, cbSupplier.Text, dateFrom, dateTo, cbProduct.Text);
+                    ButtonInfoEnabled();
+                }
+                
             }
             else
             {
                 dataGrid.ItemsSource = InvoiceDA.RetrieveAllInvoices();
+                DataGridColumns1();
                 ButtonInfoEnabled();
             }
         }
@@ -216,6 +227,46 @@ namespace Shoe_Store_DB.Views
             {
                 SupplyListAddWindow AddWindow = new SupplyListAddWindow(invoiceId);
                 AddWindow.Show();
+            }
+        }
+
+        private void DataGridColumns1()
+        {
+            var columns = new List<DataGridColumn>
+            {
+            new DataGridTextColumn { Header = "Співробітник", Binding = new Binding("Employee") },
+            new DataGridTextColumn { Header = "Клієнт", Binding = new Binding("Customer") },
+            new DataGridTextColumn { Header = "Дата та час поставки", Binding = new Binding("SupplyTime") },
+            new DataGridTextColumn { Header = "Доставлений товар", Binding = new Binding("DeliveredItems") }
+            };
+
+            // Очищаємо поточні стовпці
+            dataGrid.Columns.Clear();
+
+            // Додаємо нові стовпці до DataGrid
+            foreach (var column in columns)
+            {
+                dataGrid.Columns.Add(column);
+            }
+        }
+        private void DataGridColumns2()
+        {
+            var columns = new List<DataGridColumn>
+            {
+            new DataGridTextColumn { Header = "Назва товару", Binding = new Binding("Product") },
+            new DataGridTextColumn { Header = "Розмір", Binding = new Binding("Size") },
+            new DataGridTextColumn { Header = "Колір", Binding = new Binding("Color") },
+            new DataGridTextColumn { Header = "Ціна, грн", Binding = new Binding("Price") },
+            new DataGridTextColumn { Header = "Кількість", Binding = new Binding("Quantity") },
+            };
+
+            // Очищаємо поточні стовпці
+            dataGrid.Columns.Clear();
+
+            // Додаємо нові стовпці до DataGrid
+            foreach (var column in columns)
+            {
+                dataGrid.Columns.Add(column);
             }
         }
     }

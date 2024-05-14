@@ -42,7 +42,7 @@ namespace Shoe_Store_DB.Views
             cb1 = new String[] { "менеджер", "продавець-консультант", "касир", "складський працівник" };
 
             cb2 = new String[] { "чоловік", "жінка" };
-
+            DataContext = null;
             DataContext = this;
         }
 
@@ -74,6 +74,7 @@ namespace Shoe_Store_DB.Views
             cbGender.Text = string.Empty;
             dpDateFrom.Text = string.Empty;
             dpDateTo.Text = string.Empty;
+
         }
 
         private void btnApplyFilter_Click(object sender, RoutedEventArgs e)
@@ -84,13 +85,16 @@ namespace Shoe_Store_DB.Views
                 if (dpDateFrom.SelectedDate.HasValue) dateFrom = (DateTime)dpDateFrom.SelectedDate;
                 DateTime? dateTo = null;
                 if (dpDateTo.SelectedDate.HasValue) dateTo = (DateTime)dpDateTo.SelectedDate;
-                dataGrid.ItemsSource = EmployeeDA.EmployeeFilter(cbPosition.Text, cbGender.Text, dateFrom, dateTo);
+                if ((dateFrom != null && dateFrom > DateTime.Now) || (dateTo != null && dateTo > DateTime.Now))
+                    MessageBox.Show("Невірна дата.");
+                else  dataGrid.ItemsSource = EmployeeDA.EmployeeFilter(cbPosition.Text, cbGender.Text, dateFrom, dateTo);
             }
             else dataGrid.ItemsSource = EmployeeDA.RetrieveAllEmployees();
         }
 
         private void btnShowAll_Click(object sender, RoutedEventArgs e)
         {
+            UpdateLists();
             dataGrid.ItemsSource = EmployeeDA.RetrieveAllEmployees();
         }
 

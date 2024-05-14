@@ -43,7 +43,7 @@
                         </Image.OpacityMask>
                     </Image>
 
-                    <TextBlock Text="Username"
+                    <TextBlock Text="Ім'я користувача"
                                Foreground="Black"
                                FontSize="15"
                                FontWeight="Medium"
@@ -64,7 +64,7 @@
                              Padding="0,0,0,0"
                              Cursor="IBeam"/>
 
-                    <TextBlock Text="Password"
+                    <TextBlock Text="Пароль"
                                Foreground="Black"
                                FontSize="15"
                                FontWeight="Medium"
@@ -92,7 +92,7 @@
 
                     <Button x:Name="btnLogin"                          
                             BorderThickness="0"
-                            Content="Log In"
+                            Content="Увійти"
                             Foreground="White"
                             FontSize="15"
                             FontFamily="Montserrat"

@@ -201,6 +201,28 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
+        public static MySqlCommand RunQueryProductQuantityAddChangeQuantity(string query, int quantity)
+        {
+            try
+            {
+                if (connection != null)
+                {
+                    connection.Open();
+                    cmd = connection.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@quantity", quantity);
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+            }
+            return cmd;
+        }
+
         public static MySqlCommand RunQuerySalesAddChange(string query, int employeeId, int customerId, DateTime saleTime)
         {
             try
@@ -248,7 +270,7 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
-        public static MySqlCommand RunQuerySalesListAddChange(string query, int salesId, int productId, int quantity)
+        public static MySqlCommand RunQuerySalesListAddChange(string query, int salesId, int productQuantityId, double price, int quantity)
         {
             try
             {
@@ -259,7 +281,8 @@ namespace Shoe_Store_DB.Helper
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = query;
                     cmd.Parameters.AddWithValue("@salesId", salesId);
-                    cmd.Parameters.AddWithValue("@productId", productId);
+                    cmd.Parameters.AddWithValue("@productQuantityId", productQuantityId);
+                    cmd.Parameters.AddWithValue("@price", price);
                     cmd.Parameters.AddWithValue("@quantity", quantity);
                     cmd.ExecuteNonQuery();
                     connection.Close();
@@ -405,7 +428,7 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
-        public static MySqlCommand RunQuerySupplyListAddChange(string query, int invoiceId, int productId, int price, int quantity)
+        public static MySqlCommand RunQuerySupplyListAddChange(string query, int invoiceId, int productQuantityId, int price, int quantity)
         {
             try
             {
@@ -416,7 +439,7 @@ namespace Shoe_Store_DB.Helper
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = query;
                     cmd.Parameters.AddWithValue("@invoiceId", invoiceId);
-                    cmd.Parameters.AddWithValue("@productId", productId);
+                    cmd.Parameters.AddWithValue("@productQuantityId", productQuantityId);
                     cmd.Parameters.AddWithValue("@price", price);
                     cmd.Parameters.AddWithValue("@quantity", quantity);
                     cmd.ExecuteNonQuery();
@@ -430,7 +453,7 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
-        public static MySqlCommand RunQueryProductFilter(string query, string genderS, string typeS, string brandS, string materialS, string seasonS, string colorS, string sizeS, string priceFromS, string priceToS)
+        public static MySqlCommand RunQueryProductFilter(string query, string genderS, string typeS, string brandS, string materialS, string seasonS, string colorS, string sizeS, string priceFromS, string priceToS, string quantityFromS, string quantityToS)
         {
             try
             {
@@ -462,7 +485,7 @@ namespace Shoe_Store_DB.Helper
                 {
                     query = query + " and size_name = \"" + sizeS + "\"";
                 }
-                if (priceFromS != null && priceFromS != "" && priceFromS != "from")
+                if (priceFromS != null && priceFromS != "" && priceFromS != "від")
                 {
                     query = query + " and product_price between " + priceFromS + "";
                 }
@@ -470,7 +493,7 @@ namespace Shoe_Store_DB.Helper
                 {
                     query = query + " and product_price between product_price";
                 }
-                if (priceToS != null && priceToS != "" && priceToS != "to")
+                if (priceToS != null && priceToS != "" && priceToS != "до")
                 {
                     query = query + " and " + priceToS + "";
                 }
@@ -478,7 +501,28 @@ namespace Shoe_Store_DB.Helper
                 {
                     query = query + " and product_price";
                 }
-                query = query + " group by product_id order by quantity desc;";
+                query = query + " group by 1";
+                if ((quantityFromS != null && quantityFromS != "" && quantityFromS != "від") || (quantityToS != null && quantityToS != "" && quantityToS != "до"))
+                {
+                    query = query + " having";
+                    if (quantityFromS != null && quantityFromS != "" && quantityFromS != "від")
+                    {
+                        query = query + " quantity between " + quantityFromS + "";
+                    }
+                    else
+                    {
+                        query = query + " quantity between quantity";
+                    }
+                    if (quantityToS != null && quantityToS != "" && quantityToS != "до")
+                    {
+                        query = query + " and " + quantityToS + "";
+                    }
+                    else
+                    {
+                        query = query + " and quantity";
+                    }
+                }
+                query = query + " order by quantity desc;";
                 if (connection != null)
                 {
                     connection.Open();
@@ -496,7 +540,7 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
-        public static MySqlCommand RunQuerySalesFilter(string query, string employeeNameS, string customerNameS, DateTime? dateFromS, DateTime? dateToS, string productNameS)
+        public static MySqlCommand RunQuerySalesFilter(string query, string employeeNameS, string customerNameS, DateTime? dateFromS, DateTime? dateToS, string productNameS, string quantityFromS, string quantityToS)
         {
             try
             {
@@ -521,9 +565,10 @@ namespace Shoe_Store_DB.Helper
                     query = query + " and sale_time";
                 }
                 query = query + " group by 1";
+                query = query + " having";
                 if ((employeeNameS != null && employeeNameS != "") || (customerNameS != null && customerNameS != ""))
                 {
-                    query = query + " having";
+                    
                     if (employeeNameS != null && employeeNameS != "")
                     {
                         query = query + " employee = \"" + employeeNameS + "\"";
@@ -537,7 +582,28 @@ namespace Shoe_Store_DB.Helper
                         query = query + " customer = \"" + customerNameS + "\"";
                     }
                 }
-                query = query + " order by 1";
+                else query = query + " employee = employee";
+                if ((quantityFromS != null && quantityFromS != "" && quantityFromS != "від") || (quantityToS != null && quantityToS != "" && quantityToS != "до"))
+                {
+                    query = query + " and";
+                    if (quantityFromS != null && quantityFromS != "" && quantityFromS != "від")
+                    {
+                        query = query + " total between " + quantityFromS + "";
+                    }
+                    else
+                    {
+                        query = query + " total between total";
+                    }
+                    if (quantityToS != null && quantityToS != "" && quantityToS != "до")
+                    {
+                        query = query + " and " + quantityToS + "";
+                    }
+                    else
+                    {
+                        query = query + " and total";
+                    }
+                }
+                query = query + " order by sale_time desc";
                 if (connection != null)
                 {
                     connection.Open();
@@ -589,7 +655,7 @@ namespace Shoe_Store_DB.Helper
                 {
                     query = query + " and employee_date_of_birth";
                 }
-                query = query + " group by employee_id order by 1;";
+                query = query + " group by employee_id order by employee_name;";
                 if (connection != null)
                 {
                     connection.Open();
@@ -614,7 +680,7 @@ namespace Shoe_Store_DB.Helper
             try
             {
 
-                if (from != null && from != "" && from != "from")
+                if (from != null && from != "" && from != "від")
                 {
                     query = query + " and discount_card_accumulation between " + from + "";
                 }
@@ -622,7 +688,7 @@ namespace Shoe_Store_DB.Helper
                 {
                     query = query + " and discount_card_accumulation between discount_card_accumulation";
                 }
-                if (to != null && to != "" && to != "to")
+                if (to != null && to != "" && to != "до")
                 {
                     query = query + " and " + to + "";
                 }
@@ -630,7 +696,7 @@ namespace Shoe_Store_DB.Helper
                 {
                     query = query + " and discount_card_accumulation";
                 }
-                query = query + " order by 1;";
+                query = query + " order by customer_name;";
                 if (connection != null)
                 {
                     connection.Open();
@@ -681,7 +747,7 @@ namespace Shoe_Store_DB.Helper
                     query = query + " having";
                     query = query + " employee = \"" + employeeNameS + "\"";
                 }
-                query = query + " order by 1";
+                query = query + " order by supply_time desc;";
                 if (connection != null)
                 {
                     connection.Open();

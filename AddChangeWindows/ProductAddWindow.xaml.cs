@@ -40,7 +40,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Add";
+            btnAddChange.Content = "Додати";
         }
 
         public ProductAddWindow(Object productA)
@@ -55,7 +55,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             cbBrand.Text = product.Brand;
             cbMaterial.Text = product.Material;
             view = true;
-            btnAddChange.Content = "Change";
+            btnAddChange.Content = "Змінити";
         }
         private void UpdateLists()
         {
@@ -88,8 +88,8 @@ namespace Shoe_Store_DB.AddChangeWindows
             {
                 if (cbType.Text != "" && cbMaterial.Text != "" && cbBrand.Text != "" && txtPrice.Text != "")
                 {
-                    double.TryParse(txtPrice.Text, out double number);
-                    if (number >= 0)
+                    
+                    if (double.TryParse(txtPrice.Text, out double number) && number >= 0)
                     {
                         bool k1 = false;
                         int i1 = -1;
@@ -146,12 +146,12 @@ namespace Shoe_Store_DB.AddChangeWindows
                     }
                     else
                     {
-                        MessageBox.Show("Please enter only positive numeric or 0 for price.");
+                        MessageBox.Show("Введіть лише позитивне число або 0 для ціни.");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("All fields must be filled in!");
+                    MessageBox.Show("Всі поля повинні бути заповнені!");
                 }
             }
             catch (Exception exception)
