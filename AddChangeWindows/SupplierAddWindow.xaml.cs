@@ -26,7 +26,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         public SupplierAddWindow()
         {
             InitializeComponent();
-            btnAddChange.Content = "Додати";
+            btnAddChange.Content = "Оформити";
         }
 
         public SupplierAddWindow(Object supplierA)

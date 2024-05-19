@@ -105,9 +105,14 @@ namespace Shoe_Store_DB.DA_Layer
             string query = "update product_quantity set size_id = @sizeId, color_id = @colorId, product_quantity = @quantity where product_quantity_id = " + productQuantityId + ";";
             cmd = DBHelper.RunQueryProductQuantityAddChange(query, productId, sizeId, colorId, quantity);
         }
-        public static void ProductQuantityChangeQuantity(int productQuantityId, int quantity)
+        public static void ProductQuantityChangeQuantityDown(int productQuantityId, int quantity)
         {
             string query = "update product_quantity set product_quantity = product_quantity - @quantity where product_quantity_id = " + productQuantityId + ";";
+            cmd = DBHelper.RunQueryProductQuantityAddChangeQuantity(query, quantity);
+        }
+        public static void ProductQuantityChangeQuantityUp(int productQuantityId, int quantity)
+        {
+            string query = "update product_quantity set product_quantity = product_quantity + @quantity where product_quantity_id = " + productQuantityId + ";";
             cmd = DBHelper.RunQueryProductQuantityAddChangeQuantity(query, quantity);
         }
     }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shoe_Store_DB.AddChangeWindows"
         mc:Ignorable="d"
-        Title="ProductReturnAddWindow" Height="450" Width="370" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        Title="ProductReturnAddWindow" Height="600" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="#00000000" MouseDown="Window_MouseDown">
     <Grid Background="Transparent">
         <Border CornerRadius="0" Background="White"  BorderThickness="2" BorderBrush="Black"
@@ -13,6 +13,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
+                    <RowDefinition Height="70"/>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="20"/>
@@ -44,7 +45,8 @@
                         
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        
+                        <Button Name="btnFillDataGrid" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Показати товари" Margin="0,15,0,5" 
+                                FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnFillDataGrid_Click"/>
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="2">
@@ -53,14 +55,28 @@
          BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="5,5,5,0" Padding="0,0,0,0"
          Cursor="IBeam"/>
                 </StackPanel>
-                <TextBlock Name="txtMessage" Grid.Row="3" Text="Усі поля мають бути заповнені." Foreground="Red" FontSize="15" FontWeight="Medium"
+                <DataGrid Margin="0" Name="dataGrid" Grid.Row="3" Height="340" Width="490" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+          CellStyle="{DynamicResource DataGridCellStyle1}" Style="{DynamicResource DataGridStyle1}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Товар" Binding="{Binding Product}"/>
+                        <DataGridTextColumn Header="Розмір" Binding="{Binding Size}"/>
+                        <DataGridTextColumn Header="Колір" Binding="{Binding Color}"/>
+                        <DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}"/>
+                        <DataGridTextColumn Header="Ціна" Binding="{Binding Price}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Name="txtMessage" Grid.Row="4" Text="Усі поля мають бути заповнені." Foreground="Red" FontSize="15" FontWeight="Medium"
                            FontFamily="Montserrat" Margin=" 5, 0, 0, 0"/>
-                <Grid Grid.Row="4">
-                    <Button Name="btnAddChange" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Додати" Margin="0,5,0,5" 
-        FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAddChange_Click"/>
-
+                <Grid Grid.Row="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Name="btnDelete" Style="{StaticResource ellipseBlackButton}" HorizontalAlignment="Center" Content="Видалити товар" Margin="5,5,5,5" 
+FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnDelete_Click"/>
+                        <Button Name="btnChange" Style="{StaticResource ellipseBlackButton}" HorizontalAlignment="Center" Content="Змінти кількість" Margin="5,5,5,5" 
+FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnChange_Click"/>
+                        <Button Name="btnAddChange" Style="{StaticResource ellipseBlackButton}" HorizontalAlignment="Center" Content="Додати" Margin="5,5,5,5" 
+FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAddChange_Click"/>
+                    </StackPanel>
                 </Grid>
-
             </Grid>
         </Border>
     </Grid>

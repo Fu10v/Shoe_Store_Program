@@ -26,14 +26,11 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Назва" Binding="{Binding Name}"/>
                                     <DataGridTextColumn Header="Стать" Binding="{Binding Gender}"/>
-                                    <DataGridTextColumn Header="Тип" Binding="{Binding Type}"/>
-                                    <DataGridTextColumn Header="Бренд" Binding="{Binding Brand}"/>
-                                    <DataGridTextColumn Header="Матеріал" Binding="{Binding Material}"/>
-                                    <DataGridTextColumn Header="Сезон" Binding="{Binding Season}"/>
                                     <DataGridTextColumn Header="Кольор" Binding="{Binding Colors}"/>
                                     <DataGridTextColumn Header="Розмір" Binding="{Binding Sizes}"/>
-                                    <DataGridTextColumn Header="Ціна, грн" Binding="{Binding Price}"/>
                                     <DataGridTextColumn Header="Кількість" Binding="{Binding Quantity}"/>
+                                    <DataGridTextColumn Header="Ціна, грн" Binding="{Binding Price}"/>
+                                    <DataGridTextColumn Header="Загальна сума, грн" Binding="{Binding Total}"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -54,14 +51,18 @@
         </Grid>
         <Grid Grid.Column="1">
             <StackPanel>
-                <TextBlock Text="Employee" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="40,50,40,0"/>
+                <TextBlock Text="Співробітник" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="40,50,40,0"/>
                 <ComboBox x:Name="cbEmployee" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
           Height="28" VerticalContentAlignment="Center" Margin="40,5,40,0" IsEditable="True" 
           Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
-                <TextBlock Text="Customer" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="40,20,40,0"/>
+                <TextBlock Text="Клієнт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="40,20,40,0"/>
                 <ComboBox x:Name="cbCustomer" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
           Height="28" VerticalContentAlignment="Center" Margin="40,5,40,0" IsEditable="True" 
           Padding="0,0,0,0" ItemsSource="{Binding cb2}"/>
+                <TextBlock x:Name="tbQuantity" Text="Кількість продажей: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <TextBlock x:Name="tbTotal" Text="Загальна сума, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <TextBlock x:Name="tbDiscount" Text="Знижка, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <TextBlock x:Name="tbTotalWithDisc" Text="Сума зі жнизкою: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
                 <Button Name="btnBuy" Style="{StaticResource ellipseBlackButton}" Content="Оформити покупку" Margin="0,20,0,0" 
         FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnBuy_Click"/>
             </StackPanel>

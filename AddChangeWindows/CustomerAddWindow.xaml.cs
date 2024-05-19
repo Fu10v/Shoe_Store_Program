@@ -26,7 +26,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         public CustomerAddWindow()
         {
             InitializeComponent();
-            btnAddChange.Content = "Додати";
+            btnAddChange.Content = "Оформити";
         }
         public CustomerAddWindow(Object customerA)
         {

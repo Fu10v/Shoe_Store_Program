@@ -25,6 +25,7 @@ namespace Shoe_Store_DB.Views
             dataGridProduct.Items.Clear();
             dataGridProduct.ItemsSource = DBWindow.CartList;
             UpdateLists();
+            UpdateInfo();
         }
 
         private void UpdateLists()
@@ -35,6 +36,16 @@ namespace Shoe_Store_DB.Views
             DataContext = this;
         }
 
+        private void UpdateInfo()
+        {
+            double sum = 0;
+            foreach (ProductCart productCart in DBWindow.CartList)
+            {
+                sum = sum + productCart.Total;
+            }
+            tbQuantity.Text = $"Кількість продажей: {DBWindow.CartList.Count()}";
+            tbTotal.Text = $"Загальна сума: {sum}";
+        }
 
         private void btnShowAll_Click(object sender, RoutedEventArgs e)
         {
@@ -42,6 +53,7 @@ namespace Shoe_Store_DB.Views
             dataGridProduct.Items.Clear();
             dataGridProduct.ItemsSource = DBWindow.CartList;
             UpdateLists();
+            UpdateInfo();
         }
 
         private void btnChange_Click(object sender, RoutedEventArgs e)
@@ -57,6 +69,7 @@ namespace Shoe_Store_DB.Views
             dataGridProduct.ItemsSource = null;
             dataGridProduct.Items.Clear();
             dataGridProduct.ItemsSource = DBWindow.CartList;
+            UpdateInfo();
 
         }
 
@@ -101,13 +114,15 @@ namespace Shoe_Store_DB.Views
                         Sales sale = sales[0]; 
                         foreach (ProductCart productCart in DBWindow.CartList)
                         {
-                            ProductQuantityDA.ProductQuantityChangeQuantity(productCart.PrductQuantityId, productCart.Quantity);
+                            ProductQuantityDA.ProductQuantityChangeQuantityDown(productCart.PrductQuantityId, productCart.Quantity);
                             SalesListDA.SalesListAdd(sale.Id, productCart.PrductQuantityId, productCart.Price, productCart.Quantity);
                         }
                         DBWindow.CartList.Clear();
+                        MessageBox.Show("Покупку оформлено.");
                         dataGridProduct.ItemsSource = null;
                         dataGridProduct.Items.Clear();
                         dataGridProduct.ItemsSource = DBWindow.CartList;
+                        UpdateInfo();
                     }
                 }
                 else

@@ -88,11 +88,13 @@ namespace Shoe_Store_DB.AddChangeWindows
                                     if (productS.Quantity + number > productQuantity.Quantity)
                                     {
                                         MessageBox.Show("Недостатньо товару!");
+                                        break;
                                     }
                                     else
                                     {
                                         productS.Quantity += number;
                                         productFind = true;
+                                        break;
                                     }
                                 }
                             }

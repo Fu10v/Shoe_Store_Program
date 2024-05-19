@@ -67,7 +67,7 @@ namespace Shoe_Store_DB.Views
                 sum = sum + salesList.Total;
                 quantity = quantity + salesList.Quantity;
             }
-            tbQuantity.Text = $"Кількість товару: {quantity}";
+            tbQuantity.Text = $"Кількість товарів: {quantity}";
             tbTotal.Text = $"Загальна сума: {sum}";
         }
 

@@ -153,13 +153,21 @@ namespace Shoe_Store_DB.AddChangeWindows
                                             break;
                                         }
                                     }
-                                    if (view == false) SupplyListDA.SupplyListAdd(invoiceId, i0, price, quantity);
+                                    if (view == false)
+                                    {
+                                        SupplyListDA.SupplyListAdd(invoiceId, i0, price, quantity);
+                                        ProductQuantityDA.ProductQuantityChangeQuantityUp(i0, quantity);
+                                    }    
                                     else SupplyListDA.SupplyListChange(supplyList.Id, invoiceId, i0, price, quantity);
                                     this.Close();
                                 }
                                 else
                                 {
-                                    if (view == false) SupplyListDA.SupplyListAdd(invoiceId, i0, price, quantity);
+                                    if (view == false)
+                                    {
+                                        SupplyListDA.SupplyListAdd(invoiceId, i0, price, quantity);
+                                        ProductQuantityDA.ProductQuantityChangeQuantityUp(i0, quantity);
+                                    }
                                     else SupplyListDA.SupplyListChange(supplyList.Id, invoiceId, i0, price, quantity);
                                     this.Close();
                                 }

@@ -36,7 +36,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             InitializeComponent();
             UpdateLists();
-            btnAddChange.Content = "Додати";
+            btnAddChange.Content = "Оформити";
         }
 
         public InvoiceAddWindow(Object invoiceA)

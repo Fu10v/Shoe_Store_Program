@@ -70,7 +70,7 @@
                             <DataGrid Name="dataGrid" Height="650" Width="1331" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                                       CellStyle="{DynamicResource DataGridCellStyle1}" Style="{DynamicResource DataGridStyle1}">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Номер продажу" Binding="{Binding Sale_id}"/>
+                                    <DataGridTextColumn Header="Номер продажу" Binding="{Binding SaleId}"/>
                                     <DataGridTextColumn Header="Причина повернення" Binding="{Binding ReturnReason}"/>
                                     <DataGridTextColumn Header="Повернені товари" Binding="{Binding Products}"/>
                                 </DataGrid.Columns>
@@ -81,6 +81,8 @@
                         <StackPanel Orientation="Horizontal">
                             <Button Name="btnShowAll" Style="{StaticResource ellipseBlackButton}" Content="Оновити" Margin="5" 
                                     FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnShowAll_Click"/>
+                            <Button Name="btnInfo" Style="{StaticResource ellipseBlackButton}" Content="Показати дані" Margin="5" 
+                                    FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnInfo_Click"/>
                             <Button Name="btnAdd" Style="{StaticResource ellipseBlackButton}" Content="Додати" Margin="5" 
                                     FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnAdd_Click"/>
                             <Button Name="btnChange" Style="{StaticResource ellipseBlackButton}" Content="Змінити" Margin="5" 

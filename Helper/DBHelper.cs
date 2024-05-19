@@ -404,6 +404,30 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
+        public static MySqlCommand RunQueryProductReturnListAddChange(string query, int productReturnId, int salesListId, int productReturnListQuantity)
+        {
+            try
+            {
+                if (connection != null)
+                {
+                    connection.Open();
+                    cmd = connection.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@productReturnId", productReturnId);
+                    cmd.Parameters.AddWithValue("@salesListId", salesListId);
+                    cmd.Parameters.AddWithValue("@productReturnListQuantity", productReturnListQuantity);
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+            }
+            return cmd;
+        }
+
         public static MySqlCommand RunQueryInvoiceAddChange(string query, int employeeId, int supplierId, DateTime supplyTime)
         {
             try

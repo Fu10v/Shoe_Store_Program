@@ -18,7 +18,7 @@ namespace Shoe_Store_DB.DA_Layer
         private static MySqlDataAdapter sda;
         public static List<SalesList> RetrieveSalesList(int salesIdParameter)
         {
-            string query = "SELECT sl.sales_list_id, sl.sales_id, product_quantity_id, product_name, color_name, size_name, sl.sales_list_quantity, sales_list_price, ifnull(sum(sales_list_price * sales_list_quantity), 0) as total from sales_list sl join sales s using(sales_id) join product_quantity using(product_quantity_id) join product using(product_id) join color using(color_id) join size using(size_id) where sl.sales_id = @firstParameter group by 2, 1 order by 1;";
+            string query = "SELECT sl.sales_list_id, sl.sales_id, product_quantity_id, product_name, color_name, size_name, sl.sales_list_quantity, sales_list_price, ifnull(sum(sales_list_price * sales_list_quantity), 0) as total from sales_list sl join sales s using(sales_id) join product_quantity using(product_quantity_id) join product using(product_id) join color using(color_id) join size using(size_id) where sl.sales_id = @firstParameter group by 2, 1 order by product_name;";
             cmd = DBHelper.RunQuery(query, salesIdParameter);
             List<SalesList> salesLists = new List<SalesList>();
             if (cmd != null)
@@ -45,7 +45,7 @@ namespace Shoe_Store_DB.DA_Layer
         }
         public static List<SalesList> SalesListSearch(int salesIdParameter, string search)
         {
-            string query = "SELECT sl.sales_list_id, sl.sales_id, product_quantity_id, product_name, color_name, size_name, sl.sales_list_quantity, sales_list_price, ifnull(sum(sales_list_price * sales_list_quantity), 0) as total from sales_list sl join sales s using(sales_id) join product_quantity using(product_quantity_id) join product using(product_id) join color using(color_id) join size using(size_id) where (sl.sales_id = @firstParameter) and (p.product_name like @searchParameter) group by 2, 1 order by 1;";
+            string query = "SELECT sl.sales_list_id, sl.sales_id, product_quantity_id, product_name, color_name, size_name, sl.sales_list_quantity, sales_list_price, ifnull(sum(sales_list_price * sales_list_quantity), 0) as total from sales_list sl join sales s using(sales_id) join product_quantity using(product_quantity_id) join product using(product_id) join color using(color_id) join size using(size_id) where (sl.sales_id = @firstParameter) and (product_name like @searchParameter or size_name like @searchParameter or color_name like @searchParameter) group by 2, 1 order by product_name;";
             cmd = DBHelper.RunQuerySecondSearch(query, salesIdParameter, search);
             List<SalesList> salesLists = new List<SalesList>();
             if (cmd != null)
@@ -70,11 +70,11 @@ namespace Shoe_Store_DB.DA_Layer
             }
             return salesLists;
         }
-        public static List<SalesList> SalesListDelete(int parameter, int salesIdParameter)
+        public static List<SalesList> SalesListDelete(int salesListId, int salesId)
         {
             string query = "DELETE FROM sales_list WHERE sales_list_id = @firstParameter;";
-            cmd = DBHelper.RunQuery(query, parameter);
-            return RetrieveSalesList(salesIdParameter);
+            cmd = DBHelper.RunQuery(query, salesListId);
+            return RetrieveSalesList(salesId);
         }
 
         public static void SalesListAdd(int salesId, int productQuantityId, double price, int quantity)
