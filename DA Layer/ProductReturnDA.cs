@@ -66,7 +66,7 @@ namespace Shoe_Store_DB.DA_Layer
         {
             string query = "DELETE FROM product_return_list WHERE product_return_id = @firstParameter;";
             cmd = DBHelper.RunQuery(query, id);
-            query = "DELETE FROM product_return WHERE return_id = @firstParameter;";
+            query = "DELETE FROM product_return WHERE product_return_id = @firstParameter;";
             cmd = DBHelper.RunQuery(query, id);
             return RetrieveAllProductReturns();
         }

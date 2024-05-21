@@ -44,6 +44,7 @@ namespace Shoe_Store_DB.DA_Layer
             }
             return employees;
         }
+
         public static List<Employee> EmployeeSearch(string search)
         {
             string query = "SELECT employee_id, concat(employee_first_name, ' ', employee_surname, ' ', employee_middle_name) as employee_name, employee_position, employee_phone_number, employee_email, employee_address, employee_gender, employee_date_of_birth FROM employee where employee_first_name like @searchParameter or employee_surname like @searchParameter or employee_middle_name like @searchParameter or employee_position like @searchParameter or employee_phone_number like @searchParameter or employee_email like @searchParameter or employee_address like @searchParameter or employee_gender like @searchParameter or employee_date_of_birth like @searchParameter order by employee_name;";

@@ -325,7 +325,7 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
-        public static MySqlCommand RunQueryCustomerAddChange(string query, string firstName, string surname, string middleName, long phoneNumber, string email, long discId, int discAccum)
+        public static MySqlCommand RunQueryCustomerAddChange(string query, string firstName, string surname, string middleName, long phoneNumber, string email, long discId, double discAccum)
         {
             try
             {

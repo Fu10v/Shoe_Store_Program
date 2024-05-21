@@ -58,11 +58,20 @@
                 <TextBlock Text="Клієнт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="40,20,40,0"/>
                 <ComboBox x:Name="cbCustomer" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
           Height="28" VerticalContentAlignment="Center" Margin="40,5,40,0" IsEditable="True" 
-          Padding="0,0,0,0" ItemsSource="{Binding cb2}"/>
+          Padding="0,0,0,0" ItemsSource="{Binding cb2}" SelectionChanged="cbCustomer_SelectionChanged"/>
                 <TextBlock x:Name="tbQuantity" Text="Кількість продажей: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
                 <TextBlock x:Name="tbTotal" Text="Загальна сума, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
-                <TextBlock x:Name="tbDiscount" Text="Знижка, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
-                <TextBlock x:Name="tbTotalWithDisc" Text="Сума зі жнизкою: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <TextBlock x:Name="tbDiscount" Text="Знижка, %: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <TextBlock x:Name="tbTotalWithDisc" Text="Сума зі жнизкою, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <CheckBox x:Name="chbDiscount" Content="Використати знижку" Foreground="Black" IsEnabled="False"  BorderBrush="Black" BorderThickness="2" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <StackPanel Orientation="Horizontal" Margin="20,20,20, 0">
+                    <TextBlock Text="Оплата: " FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+    Foreground="Black" Margin="0,5,0,0" VerticalAlignment="Center"></TextBlock>
+                    <TextBox x:Name="txtPayment" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
+                        Foreground="Black" CaretBrush="Black" BorderBrush="Black" BorderThickness="0,0,0,2" Cursor="IBeam" Height="28" Width="150"
+                             VerticalContentAlignment="Center" Margin="0,5,0,0" Padding="0,0,0,0" TextChanged="txtSearch_TextChanged"/>
+                </StackPanel>
+                <TextBlock x:Name="tbChange" Text="Решта, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
                 <Button Name="btnBuy" Style="{StaticResource ellipseBlackButton}" Content="Оформити покупку" Margin="0,20,0,0" 
         FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnBuy_Click"/>
             </StackPanel>
