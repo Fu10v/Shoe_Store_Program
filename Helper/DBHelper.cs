@@ -148,6 +148,34 @@ namespace Shoe_Store_DB.Helper
             return cmd;
         }
 
+        public static MySqlCommand RunQueryStatistic(string query, string dateFrom, string dateTo, string employeeFirstName, string employeeSurname, string employeeMiddleName, string productName, string brandName)
+        {
+            try
+            {
+                if (connection != null)
+                {
+                    connection.Open();
+                    cmd = connection.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@dateFrom", dateFrom);
+                    cmd.Parameters.AddWithValue("@dateTo", dateTo);
+                    cmd.Parameters.AddWithValue("@employeeFirstName", employeeFirstName);
+                    cmd.Parameters.AddWithValue("@employeeSurname", employeeSurname);
+                    cmd.Parameters.AddWithValue("@employeeMiddleName", employeeMiddleName);
+                    cmd.Parameters.AddWithValue("@productName", productName);
+                    cmd.Parameters.AddWithValue("@brandName", brandName);
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+            }
+            return cmd;
+        }
+
         public static MySqlCommand RunQueryProductAddChange(string query, string name, string gender, int typeId, int brandId, int materialId, string season, double price)
         {
             try
@@ -662,7 +690,7 @@ namespace Shoe_Store_DB.Helper
                 {
                     query = query + " and employee_gender = \"" + genderS + "\"";
                 }
-                
+
                 if (dateFromS != null)
                 {
                     query = query + " and employee_date_of_birth between @dateFrom";

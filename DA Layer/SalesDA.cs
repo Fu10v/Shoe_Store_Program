@@ -42,27 +42,7 @@ namespace Shoe_Store_DB.DA_Layer
             return salesList;
         }
 
-        public static List<Sales> RetrieveAllSalesDateQuantity()
-        {
-            string query = "SELECT concat(Year(sale_time), ' ', Month(sale_time), ' ', Day(sale_time)) as sale_date, ifnull(sum(sales_list_quantity), 0) as quantity from sales s join employee e using(employee_id) left join customer c using(customer_id) left join sales_list using(sales_id) left join product p using(product_id) group by sale_date order by sale_date desc;";
-            cmd = DBHelper.RunQuery(query);
-            List<Sales> salesList = new List<Sales>();
-            if (cmd != null)
-            {
-                dt = new DataTable();
-                sda = new MySqlDataAdapter(cmd);
-                sda.Fill(dt);
-                foreach (DataRow dr in dt.Rows)
-                {
-                    string [] date = dr["sale_date"].ToString().Split();
-                    DateTime time_of_sale = new DateTime(Convert.ToInt32(date[0]), Convert.ToInt32(date[1]), Convert.ToInt32(date[2]));
-                    int quantity = Convert.ToInt32(dr["quantity"].ToString());
-                    Sales sales = new Sales(time_of_sale, quantity);
-                    salesList.Add(sales);
-                }
-            }
-            return salesList;
-        }
+        
 
         public static List<Sales> SalesSearch(string search)
         {

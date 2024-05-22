@@ -9,7 +9,7 @@
              d:DesignHeight="856" d:DesignWidth="1346" Background="White">
     <Grid Height="855" Width="1345">
         <Grid.RowDefinitions>
-            <RowDefinition Height="195"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -38,28 +38,34 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
                             <ComboBox x:Name="cbEmployee" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                              Height="28" VerticalContentAlignment="Center" Margin="5,5,10,5" IsEditable="True"
                              Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
-                            
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="Продукт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
-                            <ComboBox x:Name="cbProduct" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
-                              Height="28" VerticalContentAlignment="Center" Margin="5,5,10,0" IsEditable="True"
-                              Padding="0,0,0,0" ItemsSource="{Binding cb3}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2">
                             <TextBlock Text="Дата поставки з" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <DatePicker Name="dpDateFrom" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,10,5" Height="28" BorderThickness="1" BorderBrush="Black"
-                                        CalendarStyle="{StaticResource DatePickerCalendarStyle}"/>
+            CalendarStyle="{StaticResource DatePickerCalendarStyle}"/>
                         </StackPanel>
-                        <StackPanel Grid.Column="3">
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Бренд" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <ComboBox x:Name="cbBrand" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
+                                Height="28" VerticalContentAlignment="Center" Margin="5,5,10,5" IsEditable="True"
+                                Padding="0,0,0,0" ItemsSource="{Binding cb2}"/>
+                            
                             <TextBlock Text="Дата поставки до" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <DatePicker Name="dpDateTo" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,10,5" Height="28" BorderThickness="1" BorderBrush="Black"
-                                        CalendarStyle="{StaticResource DatePickerCalendarStyle}"/>
+            CalendarStyle="{StaticResource DatePickerCalendarStyle}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Продукт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <ComboBox x:Name="cbProduct" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
+                                  Height="28" VerticalContentAlignment="Center" Margin="5,5,10,5" IsEditable="True"
+                                  Padding="0,0,0,0" ItemsSource="{Binding cb3}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                            
                         </StackPanel>
                     </Grid>
                     <Grid Height="50" Margin="0,5,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1025*"/>
+                            <ColumnDefinition Width="220"/>
                             <ColumnDefinition Width="160"/>
                             <ColumnDefinition Width="160"/>
                         </Grid.ColumnDefinitions>
@@ -68,11 +74,13 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
     Foreground="Black" Margin="5,5,0,0" VerticalAlignment="Center"></TextBlock>
                             <TextBox x:Name="txtQuantity" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
 Foreground="Black" CaretBrush="Black" BorderBrush="Black" BorderThickness="0,0,0,2" Cursor="IBeam" Text="15"
-Height="28" Width="50" VerticalContentAlignment="Center" Margin="0,5,0,0" Padding="0,0,0,0" TextChanged="txtQuantity_TextChanged"/>
+Height="28" Width="50" VerticalContentAlignment="Center" Margin="0,5,0,0" Padding="0,0,0,0"/>
                         </StackPanel>
-                        <Button Name="btnApplyFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="2" HorizontalAlignment="Center" Content="Застосувати" Margin="0,5,0,5" 
+                        <Button Name="btnShowStatistic" Style="{StaticResource ellipseBlackButton2}" Grid.Column="1" Content="Показати загальну статистику" Margin="5" 
+                        FontSize="13" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnShowStatistic_Click"/>
+                        <Button Name="btnApplyFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="3" HorizontalAlignment="Center" Content="Фільтрувати" Margin="0,5,0,5" 
                 FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnApplyFilter_Click"/>
-                        <Button Name="btnResetFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="1" HorizontalAlignment="Center" Content="Скинути" Margin="0,5,0,5" 
+                        <Button Name="btnResetFilter" Style="{StaticResource ellipseBlackButton}" Grid.Column="2" HorizontalAlignment="Center" Content="Скинути фільтр" Margin="0,5,0,5" 
                 FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnResetFilter_Click"/>
                     </Grid>
                 </StackPanel>
@@ -80,28 +88,27 @@ Height="28" Width="50" VerticalContentAlignment="Center" Margin="0,5,0,0" Paddin
         </Grid>
         <Grid Grid.Row="1">
             <Border CornerRadius="10" BorderBrush="Black" BorderThickness="2"
-        Grid.Column="0" Background="#EFF2F7">
+        Grid.Column="0" Background="White">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="55"/>
+                        <RowDefinition Height="0"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel>
                             <lvc:CartesianChart Series="{Binding SeriesCollection}" Width="1345" Height="600">
                                 <lvc:CartesianChart.AxisY>
-                                    <lvc:Axis Title="Кількість продажу" Foreground="Black" FontSize="15" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                                    <lvc:Axis Title="Загальна сума продажів, грн" Foreground="Black" FontSize="15" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                                 </lvc:CartesianChart.AxisY>
                                 <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis Title="Дата" Foreground="Black" FontSize="15" Labels="{Binding Labels}"></lvc:Axis>
+                                    <lvc:Axis Title="Дата продажів" Foreground="Black" FontSize="15" Labels="{Binding Labels}"></lvc:Axis>
                                 </lvc:CartesianChart.AxisX>
                             </lvc:CartesianChart>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
-                            <Button Name="btnShowStatistic" Style="{StaticResource ellipseBlackButton}" Content="Оновити" Margin="5" 
-                                FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnShowStatistic_Click"/>
+                            
                         </StackPanel>
                     </Grid>
                 </Grid>
