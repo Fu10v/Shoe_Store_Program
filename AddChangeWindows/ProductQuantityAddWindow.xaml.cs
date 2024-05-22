@@ -17,8 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-using static Org.BouncyCastle.Asn1.Cmp.Challenge;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Shoe_Store_DB.AddChangeWindows
 {

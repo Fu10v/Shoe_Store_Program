@@ -21,10 +21,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" Height="120">
-                <Image Source="\Images\Знімок екрана 2024-04-01 150423.png"
+                <Image Source="\Images\logo.png"
                          Width="240" Height="110" Margin="0,10,0,0">
                     <Image.OpacityMask>
-                        <ImageBrush ImageSource="\Images\Знімок екрана 2024-04-01 150423.png"/>
+                            <ImageBrush ImageSource="\Images\logo.png"/>
                     </Image.OpacityMask>
                 </Image>
             </StackPanel>

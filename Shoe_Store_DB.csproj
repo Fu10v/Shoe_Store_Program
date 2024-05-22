@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Знімок екрана 2024-04-01 150423.png" />
+    <Resource Include="Images\logo.png" />
   </ItemGroup>
 
 </Project>

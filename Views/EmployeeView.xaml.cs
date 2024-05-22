@@ -18,7 +18,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 
 namespace Shoe_Store_DB.Views
 {

@@ -1,13 +1,20 @@
-﻿using Shoe_Store_DB.AddChangeWindows;
+﻿using iTextSharp.text.html;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using Shoe_Store_DB.AddChangeWindows;
 using Shoe_Store_DB.Classes;
 using Shoe_Store_DB.DA_Layer;
 using Shoe_Store_DB.View_Layer;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using iTextSharp;
+using LiveCharts.Wpf;
+using System.Globalization;
 
 namespace Shoe_Store_DB.Views
 {
@@ -22,7 +29,7 @@ namespace Shoe_Store_DB.Views
         double discount = 0;
         double totalWithDiscount = 0;
         double total = 0;
-        int customerId;
+        int customerId = -1;
         Customer customer;
         bool paymentDiscount = false;
 
@@ -36,6 +43,9 @@ namespace Shoe_Store_DB.Views
             dataGridProduct.ItemsSource = DBWindow.CartList;
             UpdateLists();
             UpdateInfo();
+            CultureInfo ukrainianCulture = new CultureInfo("uk-UA");
+            ukrainianCulture.NumberFormat.CurrencySymbol = "₴";
+            System.Threading.Thread.CurrentThread.CurrentCulture = ukrainianCulture;
         }
 
         private void UpdateLists()
@@ -135,12 +145,18 @@ namespace Shoe_Store_DB.Views
                                     ProductQuantityDA.ProductQuantityChangeQuantityDown(productCart.PrductQuantityId, productCart.Quantity);
                                     SalesListDA.SalesListAdd(sale.Id, productCart.PrductQuantityId, productCart.Price, productCart.Quantity);
                                 }
-                                string[] customerName = customer.Name.Split(' ');
-                                if (chbDiscount.IsChecked == true)
+                                if (cbCustomer.Text != "")
                                 {
-                                    CustomerDA.CustomerChange(customer.Id, customerName[0], customerName[1], customerName[2], customer.PhoneNumber, customer.Email, customer.DiscountCardId, 0);
+                                    string[] customerName = customer.Name.Split(' ');
+                                    if (chbDiscount.IsChecked == true)
+                                    {
+                                        CustomerDA.CustomerChange(customer.Id, customerName[0], customerName[1], customerName[2], customer.PhoneNumber, customer.Email, customer.DiscountCardId, 0);
+                                    }
+                                    else CustomerDA.CustomerChange(customer.Id, customerName[0], customerName[1], customerName[2], customer.PhoneNumber, customer.Email, customer.DiscountCardId, customer.DiscountCardAccumulation + total);
+
                                 }
-                                else CustomerDA.CustomerChange(customer.Id, customerName[0], customerName[1], customerName[2], customer.PhoneNumber, customer.Email, customer.DiscountCardId, customer.DiscountCardAccumulation + total);
+                                
+                                CheckCreate(sale.Id);
                                 DBWindow.CartList.Clear();
                                 MessageBox.Show("Покупку оформлено.");
                                 dataGridProduct.ItemsSource = null;
@@ -227,5 +243,104 @@ namespace Shoe_Store_DB.Views
             }
 
         }
+
+        public void CheckCreate(int salesId)
+        {
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string filePath = Path.Combine(folderPath, $"{salesId}.pdf");
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                // Створення PDF документа
+                Document document = new Document();
+                PdfWriter writer = PdfWriter.GetInstance(document, fs);
+
+                BaseFont baseFont = BaseFont.CreateFont(@"C:\Windows\Fonts\times.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                Font font = new Font(baseFont, 14);
+                // Відкриття документа для запису
+                document.Open();
+                PdfPTable headerTable = new PdfPTable(2);
+                headerTable.WidthPercentage = 100;
+                headerTable.SetWidths(new float[] { 250f, 270f }); // Встановлюємо відносні ширини для колонок
+
+                // Додавання логотипу магазину
+                PdfPCell logoCell = new PdfPCell();
+                string logoPath = "C:\\Users\\PPand\\source\\repos\\Shoe_Store_DB\\Images\\logo.png"; // Замініть на фактичний шлях до логотипу
+                if (File.Exists(logoPath))
+                {
+                    iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(logoPath);
+                    logo.ScaleToFit(220, 100);
+                    logoCell.AddElement(logo);
+                }
+                logoCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
+                logoCell.BorderColorBottom = new BaseColor(System.Drawing.Color.Black);
+                logoCell.BorderWidthBottom = 1f;
+                headerTable.AddCell(logoCell);
+                
+
+                // Додавання інформації про магазин
+                PdfPCell infoCell = new PdfPCell();
+                infoCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                infoCell.PaddingLeft = 10f; // Задаємо відступ для правильного відображення
+                infoCell.AddElement(new Paragraph("Магазин Sole Haven", font));
+                infoCell.AddElement(new Paragraph("Адреса:", font));
+                infoCell.AddElement(new Paragraph("Харків, Хірківська обл., вул. Китаєнка", font));
+                infoCell.AddElement(new Paragraph("Номер телефону: (123) 456-7890", font));
+                infoCell.AddElement(new Paragraph(" ")); // Додати порожній рядок
+                infoCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
+                infoCell.BorderColorBottom = new BaseColor(System.Drawing.Color.Black);
+                infoCell.BorderWidthBottom = 1f;
+                headerTable.AddCell(infoCell);
+                document.Add(headerTable);
+                document.Add(new Paragraph(" "));
+                // Додавання перерахунку куплених товарів
+                PdfPTable table = new PdfPTable(4); // 4 колонки для найменування, кількості, ціни та загальної суми
+                table.WidthPercentage = 100;
+                table.AddCell(new PdfPCell(new Phrase("Товар", font)));
+                table.AddCell(new PdfPCell(new Phrase("Кількість", font)));
+                table.AddCell(new PdfPCell(new Phrase("Ціна, грн", font)));
+                table.AddCell(new PdfPCell(new Phrase("Загальна сума, грн", font)));
+
+                // Отримання списку товарів з DBWindow.CartList
+                 // Замініть це на фактичний спосіб отримання списку товарів
+
+                double totalAmount = 0;
+
+                foreach (ProductCart product in DBWindow.CartList)
+                {
+                    table.AddCell(product.Name);
+                    table.AddCell(product.Quantity.ToString());
+                    table.AddCell(product.Price.ToString("C"));
+                    table.AddCell(product.Total.ToString("C"));
+
+                    totalAmount += product.Total;
+                }
+
+                document.Add(table);
+
+                // Додавання підсумкової інформації
+                if (chbDiscount.IsChecked == true)
+                {
+                    document.Add(new Paragraph(" "));
+                    document.Add(new Paragraph($"Загальна сума, грн: {total:C}", font));
+                    document.Add(new Paragraph($"Знижка: {discount:C}", font));
+                    document.Add(new Paragraph($"Сума зі знижкою: {totalWithDiscount:C}", font));
+                }
+                else
+                {
+                    document.Add(new Paragraph(" "));
+                    document.Add(new Paragraph($"Загальна сума, грн: {total:C}", font));
+                }
+
+                // Закриття документа
+                document.Close();
+            }
+
+            MessageBox.Show("Чек створено за шляхом: " + filePath);
+        }
+
+
+
+
     }
 }
