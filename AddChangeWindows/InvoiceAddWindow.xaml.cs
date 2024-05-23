@@ -37,6 +37,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             InitializeComponent();
             UpdateLists();
             btnAddChange.Content = "Оформити";
+            stackPanel1.Children.Remove(txtTimeOfSale);
         }
 
         public InvoiceAddWindow(Object invoiceA)
@@ -77,7 +78,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             {
                 if (cbEmployee.Text != "" && txtTimeOfSale.Text != "" && cbSupplier.Text != "")
                 {
-                    if (DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale))
+                    if (DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale) || view == false)
                     {
                         int i1 = -1;
                         int i2 = -1;
@@ -97,7 +98,7 @@ namespace Shoe_Store_DB.AddChangeWindows
                         }
                         if (i1 != -1 && i2 != -1)
                         {
-                            if (view == false) InvoiceDA.InvoiceAdd(i1, i2, timeOfSale);
+                            if (view == false) InvoiceDA.InvoiceAdd(i1, i2, DateTime.Now);
                             else InvoiceDA.InvoiceChange(invoice.Id, i1, i2, timeOfSale);
                             this.Close();
                         }

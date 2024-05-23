@@ -126,8 +126,6 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
         FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnChange_Click"/>
                                 <Button Name="btnDelete" Style="{StaticResource ellipseBlackButton}" Content="Видалити" Margin="5" 
         FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand" Click="btnDelete_Click"/>
-                                <Button Name="showSalesSchedule" Style="{StaticResource ellipseBlackButton2}" Content="Показати графік продажу" Margin="5" 
-        FontSize="14" FontWeight="Medium" FontFamily="Montserrat" Foreground="White" Cursor="Hand"/>
                             </StackPanel>
                         </Border>
                     </Grid>

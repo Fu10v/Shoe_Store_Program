@@ -101,6 +101,7 @@ namespace Shoe_Store_DB.AddChangeWindows
                             if (productFind == false)
                             {
                                 DBWindow.CartList.Add(new ProductCart(product.Id, product.Name, product.Gender, product.Type, product.Brand, product.Material, product.Season, productQuantity.Color, productQuantity.Size, product.Price, QuantityWindow.quantity, productQuantity.Id));
+                                MessageBox.Show("Товар успішно додано до кошику.");
                             }
                             this.Close();
                         }

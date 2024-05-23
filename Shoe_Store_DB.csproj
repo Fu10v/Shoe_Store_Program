@@ -6,10 +6,15 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>зображення_2024-05-23_223007705.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Знімок екрана 2024-04-01 150423.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="зображення_2024-05-23_223007705.ico" />
   </ItemGroup>
 
   <ItemGroup>
