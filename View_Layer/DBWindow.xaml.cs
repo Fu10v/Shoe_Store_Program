@@ -41,11 +41,12 @@ namespace Shoe_Store_DB.View_Layer
                 bAdmin.Background = Brushes.White;
                 radioButton2.IsEnabled = false;
                 radioButton3.IsEnabled = false;
-                radioButton4.IsEnabled = false;
                 radioButton5.IsEnabled = false;
                 radioButton6.IsEnabled = false;
                 btnShowStatistic.IsEnabled = false;
                 btnShowStatistic.Background = Brushes.White;
+                RowDefinition3.Height = new GridLength(0);
+                buttonsStackPanel.Children.Remove(btnShowStatistic);
             }
         }
 

@@ -16,8 +16,8 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="120"/>
-                <RowDefinition Height="120"/>
-                <RowDefinition Height="290"/>
+                <RowDefinition Height="175"/>
+                <RowDefinition Name="RowDefinition3" Height="230"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" Height="120">
@@ -32,18 +32,18 @@
                 <StackPanel>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton1" GroupName="Menu" Content="   Продукти" Checked="radioButton1_Checked"/>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton8" GroupName="Menu" Content="   Накладні" Checked="radioButton7_Checked"/>
-                </StackPanel>
+                        <RadioButton Style="{StaticResource radioButton}" Name="radioButton4" GroupName="Menu" Content="   Клієнти" Checked="radioButton4_Checked"/>
+                    </StackPanel>
             </Border>
                 <Border Name="bAdmin" Grid.Row="2" Margin="0,5,0,0" Background="Black" CornerRadius="0,10,10,0" Padding="0,5,5,0">
                     <StackPanel>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton2" GroupName="Menu" Content="   Продажі" Checked="radioButton2_Checked"/>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton3" GroupName="Menu" Content="   Повернення" Checked="radioButton3_Checked"/>
-                        <RadioButton Style="{StaticResource radioButton}" Name="radioButton4" GroupName="Menu" Content="   Клієнти" Checked="radioButton4_Checked"/>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton5" GroupName="Menu" Content="   Співробітники" Checked="radioButton5_Checked"/>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton6" GroupName="Menu" Content="   Постачальники" Checked="radioButton6_Checked"/>
                     </StackPanel>
                 </Border>
-                <StackPanel Grid.Row="3">
+                <StackPanel Grid.Row="3" Name="buttonsStackPanel">
                     <Button x:Name="btnShowOrder" BorderThickness="0" Content="Показати кошик" Foreground="White" 
                         FontSize="15" FontFamily="Montserrat" Cursor="Hand" Margin="0,10,0,0"
                         Click="btnShowOrder_Click" Style="{StaticResource ellipseBlackButton2}">

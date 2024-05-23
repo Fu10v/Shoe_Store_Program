@@ -282,7 +282,7 @@ namespace Shoe_Store_DB.Views
                 PdfPCell infoCell = new PdfPCell();
                 infoCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 infoCell.PaddingLeft = 10f; // Задаємо відступ для правильного відображення
-                infoCell.AddElement(new Paragraph("Магазин Sole Haven", font));
+                infoCell.AddElement(new Paragraph("Чек магазин Sole Haven", font));
                 infoCell.AddElement(new Paragraph("Адреса:", font));
                 infoCell.AddElement(new Paragraph("Харків, Хірківська обл., вул. Китаєнка", font));
                 infoCell.AddElement(new Paragraph("Номер телефону: (123) 456-7890", font));
@@ -293,13 +293,25 @@ namespace Shoe_Store_DB.Views
                 headerTable.AddCell(infoCell);
                 document.Add(headerTable);
                 document.Add(new Paragraph(" "));
+                document.Add(new Paragraph($"Номер продажу: {salesId}", font));
+                document.Add(new Paragraph($"Дата: {new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)}", font));
+                document.Add(new Paragraph(" "));
                 // Додавання перерахунку куплених товарів
                 PdfPTable table = new PdfPTable(4); // 4 колонки для найменування, кількості, ціни та загальної суми
                 table.WidthPercentage = 100;
-                table.AddCell(new PdfPCell(new Phrase("Товар", font)));
-                table.AddCell(new PdfPCell(new Phrase("Кількість", font)));
-                table.AddCell(new PdfPCell(new Phrase("Ціна, грн", font)));
-                table.AddCell(new PdfPCell(new Phrase("Загальна сума, грн", font)));
+                table.DefaultCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
+                PdfPCell pdfPCell1 = new PdfPCell(new Phrase("Товар", font));
+                pdfPCell1.Border = iTextSharp.text.Rectangle.NO_BORDER;
+                table.AddCell(pdfPCell1);
+                PdfPCell pdfPCell2 = new PdfPCell(new Phrase("Кількість", font));
+                pdfPCell2.Border = iTextSharp.text.Rectangle.NO_BORDER;
+                table.AddCell(pdfPCell2);
+                PdfPCell pdfPCell3 = new PdfPCell(new Phrase("Ціна, грн", font));
+                pdfPCell3.Border = iTextSharp.text.Rectangle.NO_BORDER;
+                table.AddCell(pdfPCell3);
+                PdfPCell pdfPCell4 = new PdfPCell(new Phrase("Загальна сума, грн", font));
+                pdfPCell4.Border = iTextSharp.text.Rectangle.NO_BORDER;
+                table.AddCell(pdfPCell4);
 
                 // Отримання списку товарів з DBWindow.CartList
                  // Замініть це на фактичний спосіб отримання списку товарів
@@ -331,7 +343,8 @@ namespace Shoe_Store_DB.Views
                     document.Add(new Paragraph(" "));
                     document.Add(new Paragraph($"Загальна сума, грн: {total:C}", font));
                 }
-
+                document.Add(new Paragraph(" "));
+                document.Add(new Paragraph($"Дякуємо за покупку в Sole Haven!", font));
                 // Закриття документа
                 document.Close();
             }
