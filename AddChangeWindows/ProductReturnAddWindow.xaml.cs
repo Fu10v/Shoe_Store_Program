@@ -24,6 +24,7 @@ namespace Shoe_Store_DB.AddChangeWindows
     /// </summary>
     public partial class ProductReturnAddWindow : Window
     {
+        int isListChecked = -1;
         bool view = false;
         ProductReturn productReturn;
         public static List<Object> salesLists;
@@ -109,14 +110,53 @@ namespace Shoe_Store_DB.AddChangeWindows
                                 MessageBox.Show("Цей продаж вже повертали.");
                             }
                             else
-                            {
-                                salesLists = SalesListDA.RetrieveSalesList(number1).Cast<object>().ToList();
-                                TimeSpan timeSpan = DateTime.Now - saleDate;
-                                if (timeSpan.Days > 14)
+                            {   
+                                if (isListChecked != number1)
                                 {
-                                    MessageBoxResult result = MessageBox.Show("Пройшло більше 14 днів. Ви впевненні в поверненні товару?", "Підтвердження", MessageBoxButton.YesNo);
-                                    if (result == MessageBoxResult.Yes)
+                                    MessageBox.Show("Оновіть товари.");
+                                }
+                                else
+                                {
+                                    TimeSpan timeSpan = DateTime.Now - saleDate;
+                                    if (timeSpan.Days > 14)
                                     {
+                                        MessageBoxResult result = MessageBox.Show("Пройшло більше 14 днів. Ви впевненні в поверненні товару?", "Підтвердження", MessageBoxButton.YesNo);
+                                        if (result == MessageBoxResult.Yes)
+                                        {
+                                            if (view == false)
+                                            {
+                                                ProductReturnDA.ProductReturnAdd(number1, txtReturnReason.Text);
+                                                List<ProductReturn> productReturns = ProductReturnDA.RetrieveAllProductReturns();
+                                                ProductReturn productReturnI = productReturns[0];
+                                                foreach (SalesList salesList in salesLists)
+                                                {
+                                                    ProductReturnListDA.ProductReturnListAdd(productReturnI.Id, salesList.Id, salesList.Quantity);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                ProductReturnDA.ProductReturnChange(productReturn.Id, number1, txtReturnReason.Text);
+                                                List<ProductReturnList> productReturnList = ProductReturnListDA.RetrieveProductReturnList(productReturn.Id);
+                                                foreach (SalesList salesList in salesLists)
+                                                {
+                                                    foreach (ProductReturnList productReturnList1 in productReturnList)
+                                                    {
+                                                        if (productReturnList1.SalesListId == salesList.Id)
+                                                        {
+                                                            ProductReturnListDA.ProductReturnListChange(productReturnList1.Id, productReturn.Id, salesList.Id, salesList.Quantity);
+                                                            break;
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+
+                                            this.Close();
+                                        }
+                                    }
+                                    else
+                                    {
+
                                         if (view == false)
                                         {
                                             ProductReturnDA.ProductReturnAdd(number1, txtReturnReason.Text);
@@ -148,39 +188,7 @@ namespace Shoe_Store_DB.AddChangeWindows
                                         this.Close();
                                     }
                                 }
-                                else
-                                {
-
-                                    if (view == false)
-                                    {
-                                        ProductReturnDA.ProductReturnAdd(number1, txtReturnReason.Text);
-                                        List<ProductReturn> productReturns = ProductReturnDA.RetrieveAllProductReturns();
-                                        ProductReturn productReturnI = productReturns[0];
-                                        foreach (SalesList salesList in salesLists)
-                                        {
-                                            ProductReturnListDA.ProductReturnListAdd(productReturnI.Id, salesList.Id, salesList.Quantity);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        ProductReturnDA.ProductReturnChange(productReturn.Id, number1, txtReturnReason.Text);
-                                        List<ProductReturnList> productReturnList = ProductReturnListDA.RetrieveProductReturnList(productReturn.Id);
-                                        foreach (SalesList salesList in salesLists)
-                                        {
-                                            foreach (ProductReturnList productReturnList1 in productReturnList)
-                                            {
-                                                if (productReturnList1.SalesListId == salesList.Id)
-                                                {
-                                                    ProductReturnListDA.ProductReturnListChange(productReturnList1.Id, productReturn.Id, salesList.Id, salesList.Quantity);
-                                                    break;
-                                                }
-                                            }
-
-                                        }
-                                    }
-
-                                    this.Close();
-                                }
+                                
                             }
                             
                             
@@ -219,6 +227,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             {
                 SalesList salesList = (SalesList)dataGrid.SelectedItem;
                 salesLists.Remove(salesList);
+                dataGrid.ItemsSource = null;
                 dataGrid.ItemsSource = salesLists;
             }
         }
@@ -242,7 +251,7 @@ namespace Shoe_Store_DB.AddChangeWindows
                     {
                         salesLists = SalesListDA.RetrieveSalesList(number1).Cast<object>().ToList();
                         dataGrid.ItemsSource = salesLists;
-
+                        isListChecked = number1;
                     }
                     else MessageBox.Show("Продаж не знайдено.");
                 }

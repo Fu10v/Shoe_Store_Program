@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -26,6 +27,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         List<Classes.Type> types = TypeDA.RetrieveAllTypes();
         List<Classes.Brand> brands = BrandDA.RetrieveAllBrands();
         List<Classes.Material> materials = MaterialDA.RetrieveAllMaterials();
+        List<Product> products = ProductDA.RetrieveAllProducts();
 
         bool view = false;
         Product product;
@@ -50,7 +52,15 @@ namespace Shoe_Store_DB.AddChangeWindows
             UpdateLists();
             txtName.Text = product.Name;
             txtPrice.Text = Convert.ToString(product.Price);
-            cbGender.Text = product.Gender;
+            if (product.Gender == "чоловіче") { cbGender.SelectedIndex = 0; }
+            else if (product.Gender == "жіноче") { cbGender.SelectedIndex = 1; }
+            else { cbGender.SelectedIndex = 2; }
+            if (product.Season == "зима") { cbSeason.SelectedIndex = 0; }
+            else if (product.Season == "весна") { cbSeason.SelectedIndex = 1; }
+            else if (product.Season == "літо") { cbSeason.SelectedIndex = 2; }
+            else if (product.Season == "осінь") { cbSeason.SelectedIndex = 3; }
+            else if (product.Season == "демісезон") { cbSeason.SelectedIndex = 4; }
+            else { cbSeason.SelectedIndex = 5; }
             cbType.Text = product.Type;
             cbBrand.Text = product.Brand;
             cbMaterial.Text = product.Material;
@@ -124,25 +134,41 @@ namespace Shoe_Store_DB.AddChangeWindows
                                 i3 = material.Id;
                             }
                         }
-
-                        if (k1 == false)
+                        bool k4 = false;
+                        foreach (Classes.Product product in products)
                         {
-                            newtype = TypeDA.TypeAdd(cbType.Text);
-                            i1 = newtype.Id;
+                            if (product.Name == txtName.Text)
+                            {
+                                k4 = true;
+                            }
                         }
-                        if (k2 == false)
+                        if (k4 && view == false)
                         {
-                            newbrand = BrandDA.BrandAdd(cbBrand.Text);
-                            i2 = newbrand.Id;
+                            MessageBox.Show("Товар з такаою назвою вже існує.");
                         }
-                        if (k3 == false)
+                        else
                         {
-                            newmaterial = MaterialDA.MaterialAdd(cbMaterial.Text);
-                            i3 = newmaterial.Id;
+                            if (k1 == false)
+                            {
+                                newtype = TypeDA.TypeAdd(cbType.Text);
+                                i1 = newtype.Id;
+                            }
+                            if (k2 == false)
+                            {
+                                newbrand = BrandDA.BrandAdd(cbBrand.Text);
+                                i2 = newbrand.Id;
+                            }
+                            if (k3 == false)
+                            {
+                                newmaterial = MaterialDA.MaterialAdd(cbMaterial.Text);
+                                i3 = newmaterial.Id;
+                            }
+                            if (view == false) ProductDA.ProductAdd(txtName.Text, cbGender.Text, i1, i2, i3, cbSeason.Text, number);
+                            else ProductDA.ProductChange(product.Id, txtName.Text, cbGender.Text, i1, i2, i3, cbSeason.Text, number);
+                            this.Close();
+                            
                         }
-                        if (view == false) ProductDA.ProductAdd(txtName.Text, cbGender.Text, i1, i2, i3, cbSeason.Text, number);
-                        else ProductDA.ProductChange(product.Id, txtName.Text, cbGender.Text, i1, i2, i3, cbSeason.Text, number);
-                        this.Close();
+                        
                     }
                     else
                     {

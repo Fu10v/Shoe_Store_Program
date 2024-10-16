@@ -45,6 +45,62 @@ namespace Shoe_Store_DB.DA_Layer
             return employees;
         }
 
+        public static List<Employee> RetrieveAllEmployeesCashiers()
+        {
+            string query = "SELECT employee_id, concat(employee_first_name, ' ', employee_surname, ' ',employee_middle_name) as employee_name, employee_position, employee_phone_number, employee_email, employee_address, employee_gender, employee_date_of_birth FROM employee where employee_position = 'касир' order by employee_name;";
+            cmd = DBHelper.RunQuery(query);
+            List<Employee> employees = new List<Employee>();
+            if (cmd != null)
+            {
+                dt = new DataTable();
+                sda = new MySqlDataAdapter(cmd);
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int id = Convert.ToInt32(dr["employee_id"]);
+                    string name = dr["employee_name"].ToString();
+                    string position = dr["employee_position"].ToString();
+                    long phoneNumber = Convert.ToInt64(dr["employee_phone_number"]);
+                    string email = dr["employee_email"].ToString();
+                    string address = dr["employee_address"].ToString();
+                    string gender = dr["employee_gender"].ToString();
+                    DateTime date = (DateTime)dr["employee_date_of_birth"];
+                    DateOnly dateOfBirth = new DateOnly(date.Year, date.Month, date.Day); ;
+                    Employee employee = new Employee(id, name, position, phoneNumber, email, address, gender, dateOfBirth);
+                    employees.Add(employee);
+                }
+            }
+            return employees;
+        }
+
+        public static List<Employee> RetrieveAllEmployeesWarehouseWorkers()
+        {
+            string query = "SELECT employee_id, concat(employee_first_name, ' ', employee_surname, ' ',employee_middle_name) as employee_name, employee_position, employee_phone_number, employee_email, employee_address, employee_gender, employee_date_of_birth FROM employee where employee_position = 'складський працівник' order by employee_name;";
+            cmd = DBHelper.RunQuery(query);
+            List<Employee> employees = new List<Employee>();
+            if (cmd != null)
+            {
+                dt = new DataTable();
+                sda = new MySqlDataAdapter(cmd);
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int id = Convert.ToInt32(dr["employee_id"]);
+                    string name = dr["employee_name"].ToString();
+                    string position = dr["employee_position"].ToString();
+                    long phoneNumber = Convert.ToInt64(dr["employee_phone_number"]);
+                    string email = dr["employee_email"].ToString();
+                    string address = dr["employee_address"].ToString();
+                    string gender = dr["employee_gender"].ToString();
+                    DateTime date = (DateTime)dr["employee_date_of_birth"];
+                    DateOnly dateOfBirth = new DateOnly(date.Year, date.Month, date.Day); ;
+                    Employee employee = new Employee(id, name, position, phoneNumber, email, address, gender, dateOfBirth);
+                    employees.Add(employee);
+                }
+            }
+            return employees;
+        }
+
         public static List<Employee> EmployeeSearch(string search)
         {
             string query = "SELECT employee_id, concat(employee_first_name, ' ', employee_surname, ' ', employee_middle_name) as employee_name, employee_position, employee_phone_number, employee_email, employee_address, employee_gender, employee_date_of_birth FROM employee where employee_first_name like @searchParameter or employee_surname like @searchParameter or employee_middle_name like @searchParameter or employee_position like @searchParameter or employee_phone_number like @searchParameter or employee_email like @searchParameter or employee_address like @searchParameter or employee_gender like @searchParameter or employee_date_of_birth like @searchParameter order by employee_name;";

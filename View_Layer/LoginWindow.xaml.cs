@@ -56,7 +56,7 @@ namespace Shoe_Store_DB.View_Layer
             }
             else
             {
-                txtMessage.Text = ("Incorrect login or password.");
+                txtMessage.Text = ("Неправильний логін або пароль.");
                 txtUser.Text = "";
                 txtPassword.Password = "";
             }

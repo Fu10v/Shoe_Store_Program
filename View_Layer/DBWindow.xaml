@@ -30,7 +30,7 @@
             </StackPanel>
             <Border Grid.Row="1" Margin="0,5,0,0" Background="Black" CornerRadius="0,10,10,0" Padding="0,5,5,0">
                 <StackPanel>
-                        <RadioButton Style="{StaticResource radioButton}" Name="radioButton1" GroupName="Menu" Content="   Продукти" Checked="radioButton1_Checked"/>
+                        <RadioButton Style="{StaticResource radioButton}" Name="radioButton1" GroupName="Menu" Content="   Товари" Checked="radioButton1_Checked"/>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton8" GroupName="Menu" Content="   Накладні" Checked="radioButton7_Checked"/>
                         <RadioButton Style="{StaticResource radioButton}" Name="radioButton4" GroupName="Menu" Content="   Клієнти" Checked="radioButton4_Checked"/>
                     </StackPanel>

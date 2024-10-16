@@ -43,7 +43,7 @@
                         <TextBlock Text="Дата та час продажу" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtTimeOfSale" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Gray" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
-                                 Cursor="IBeam" TextChanged="txtTimeOfSale_TextChanged" Text="dd.mm.yyyy hh:mm"/>
+                                 Cursor="IBeam" TextChanged="txtTimeOfSale_TextChanged" Text="дд.мм.рррр гг:хм"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="Клієнт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,5,0,0"/>

@@ -30,7 +30,7 @@ namespace Shoe_Store_DB.DA_Layer
             }
             if (productName != "")
             {
-                query = query + " where product_name = @productName";
+                query = query + " and product_name = @productName";
             }
             else
             {
@@ -38,7 +38,7 @@ namespace Shoe_Store_DB.DA_Layer
             }
             if (brandName != "")
             {
-                query = query + " where brand_name = @brandName";
+                query = query + " and brand_name = @brandName";
             }
             else
             {

@@ -172,13 +172,19 @@ namespace Shoe_Store_DB.Views
                 DateTime? dateTo = null;
                 if (dpDateTo.SelectedDate.HasValue) dateTo = (DateTime)dpDateTo.SelectedDate;
                 if ((dateFrom != null && dateFrom > DateTime.Now) || (dateTo != null && dateTo > DateTime.Now))
-                    MessageBox.Show("Невірна дата.");
+                    MessageBox.Show("Введена дата не повинна перевищувати сьогоднішню дату.");
                 else
                 {
-                    DataGridColumns1();
-                    dataGrid.ItemsSource = InvoiceDA.InvoiceFilter(cbEmployee.Text, cbSupplier.Text, dateFrom, dateTo, cbProduct.Text);
-                    ButtonInfoEnabled();
+                    if (dateFrom != null && dateTo != null && dateFrom > dateTo)
+                        MessageBox.Show("Некоректний діапазон дат.");
+                    else
+                    {
+                        DataGridColumns1();
+                        dataGrid.ItemsSource = InvoiceDA.InvoiceFilter(cbEmployee.Text, cbSupplier.Text, dateFrom, dateTo, cbProduct.Text);
+                        ButtonInfoEnabled();
+                    }
                 }
+                
                 
             }
             else

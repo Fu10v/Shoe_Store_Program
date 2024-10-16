@@ -9,7 +9,7 @@
     <Grid Height="855" Width="1345">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" >
             <Border CornerRadius="10" BorderBrush="Black" BorderThickness="2"
@@ -62,7 +62,7 @@
                 <TextBlock x:Name="tbQuantity" Text="Кількість продажей: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
                 <TextBlock x:Name="tbTotal" Text="Загальна сума, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
                 <TextBlock x:Name="tbDiscount" Text="Знижка, %: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
-                <TextBlock x:Name="tbTotalWithDisc" Text="Сума зі жнизкою, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
+                <TextBlock x:Name="tbTotalWithDisc" Text="Сума зі знижкою, грн: " Foreground="Black" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
                 <CheckBox x:Name="chbDiscount" Content="Використати знижку" Foreground="Black" IsEnabled="False"  BorderBrush="Black" BorderThickness="2" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Margin="20,20,20,0"/>
                 <StackPanel Orientation="Horizontal" Margin="20,20,20, 0">
                     <TextBlock Text="Оплата: " FontSize="16" FontWeight="Medium" FontFamily="Montserrat"

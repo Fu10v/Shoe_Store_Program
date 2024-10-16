@@ -37,7 +37,7 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
                             <ComboBox x:Name="cbEmployee" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                              Height="28" VerticalContentAlignment="Center" Margin="5,5,10,5" IsEditable="True"
                              Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
-                            <TextBlock Text="Продукт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <TextBlock Text="Товар" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <ComboBox x:Name="cbProduct" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                               Height="28" VerticalContentAlignment="Center" Margin="5,5,10,0" IsEditable="True"
                               Padding="0,0,0,0" ItemsSource="{Binding cb3}"/>

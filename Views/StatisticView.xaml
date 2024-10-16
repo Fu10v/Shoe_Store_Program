@@ -9,7 +9,7 @@
              d:DesignHeight="856" d:DesignWidth="1346" Background="White">
     <Grid Height="855" Width="1345">
         <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="205"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -17,15 +17,7 @@
                 <StackPanel>
                     <TextBlock Text="Фільтр" FontSize="18" FontWeight="Medium" FontFamily="Montserrat"
            Foreground="Black" Margin="5,5"></TextBlock>
-                    <StackPanel Orientation="Horizontal" Height="50" Margin="5,0,0,0">
-                        <TextBlock Text="Пошук: " FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
-                 Foreground="Black" Margin="0,5,0,0" VerticalAlignment="Center"></TextBlock>
-                        <TextBox x:Name="txtSearch" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
-             Foreground="Black" CaretBrush="Black" BorderBrush="Black" BorderThickness="0,0,0,2" Cursor="IBeam"
-             Height="28" Width="400" VerticalContentAlignment="Center" Margin="0,5,0,0" Padding="0,0,0,0" TextChanged="txtSearch_TextChanged"/>
-                        <TextBlock Text="Примітка: формат дати: рррр-мм-дд" Grid.Column="0" FontSize="16" FontWeight="Medium" FontFamily="Montserrat"
-Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan="2"></TextBlock>
-                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="5" Margin="5,0,0,0"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -53,7 +45,7 @@ Foreground="Black" Margin="10,0,0,5" VerticalAlignment="Bottom" Grid.ColumnSpan=
             CalendarStyle="{StaticResource DatePickerCalendarStyle}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                            <TextBlock Text="Продукт" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
+                            <TextBlock Text="Товар" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="5,0,0,0"/>
                             <ComboBox x:Name="cbProduct" Style="{StaticResource ComboBoxFlatStyle}"  FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                                   Height="28" VerticalContentAlignment="Center" Margin="5,5,10,5" IsEditable="True"
                                   Padding="0,0,0,0" ItemsSource="{Binding cb3}"/>
@@ -96,7 +88,7 @@ Height="28" Width="50" VerticalContentAlignment="Center" Margin="0,5,0,0" Paddin
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <StackPanel>
-                            <lvc:CartesianChart Series="{Binding SeriesCollection}" Width="1345" Height="600">
+                            <lvc:CartesianChart Series="{Binding SeriesCollection}" Width="1345" Height="650">
                                 <lvc:CartesianChart.AxisY>
                                     <lvc:Axis Title="Загальна сума продажів, грн" Foreground="Black" FontSize="15" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                                 </lvc:CartesianChart.AxisY>
@@ -108,7 +100,6 @@ Height="28" Width="50" VerticalContentAlignment="Center" Margin="0,5,0,0" Paddin
                     </Grid>
                     <Grid Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
-                            
                         </StackPanel>
                     </Grid>
                 </Grid>

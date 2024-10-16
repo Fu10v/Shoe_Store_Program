@@ -23,6 +23,7 @@ namespace Shoe_Store_DB.AddChangeWindows
     {
         Customer customer;
         bool view = false;
+        List<Customer> customers = CustomerDA.RetrieveAllCustomers();
         public CustomerAddWindow()
         {
             InitializeComponent();
@@ -62,7 +63,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         {
             try
             {
-                if (txtPhoneNumber.Text != "" && txtDiscountId.Text != "" && txtDiscountAccumulation.Text != "")
+                if (txtPhoneNumber.Text != "" && txtDiscountId.Text != "" && txtDiscountAccumulation.Text != "" && txtFirstName.Text != "" && txtMiddleName.Text != "" && txtSurname.Text != "")
                 {
                     
                     if (long.TryParse(txtPhoneNumber.Text, out long number1) && long.TryParse(txtDiscountId.Text, out long number2) && int.TryParse(txtDiscountAccumulation.Text, out int number3))
@@ -71,9 +72,42 @@ namespace Shoe_Store_DB.AddChangeWindows
                         {
                             if (txtDiscountId.Text.Length == 12)
                             {
-                                if (view == false) CustomerDA.CustomerAdd(txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
-                                else CustomerDA.CustomerChange(customer.Id, txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
-                                this.Close();
+                                bool inList = false;
+                                foreach (Customer customer in customers)
+                                {
+                                    string name = $"{txtFirstName} {txtSurname} {txtMiddleName}";
+                                    if (name == customer.Name)
+                                    {
+                                        inList = true;
+                                        break;
+                                    }
+                                }
+                                if (inList && view == false) 
+                                {
+                                    MessageBox.Show("Клієнт з таким ім'ям вже існує.");
+                                }
+                                else
+                                {
+                                    bool inListDisc = false;
+                                    foreach (Customer customer in customers)
+                                    {
+                                        if (number2 == customer.DiscountCardId)
+                                        {
+                                            inListDisc = true;
+                                            break;
+                                        }
+                                    }
+                                    if (inListDisc && view == false)
+                                    {
+                                        MessageBox.Show("Клієнт з таким номером дисконтної картки вже існує.");
+                                    }
+                                    else
+                                    {
+                                        if (view == false) CustomerDA.CustomerAdd(txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
+                                        else CustomerDA.CustomerChange(customer.Id, txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, number1, txtEmail.Text, number2, number3);
+                                        this.Close();
+                                    }
+                                }
                             }
                             else MessageBox.Show("Номер дисконтної карти повинен складатися з 12 цифр.");
                         }

@@ -209,13 +209,25 @@ namespace Shoe_Store_DB.Views
                     DateTime? dateTo = null;
                     if (dpDateTo.SelectedDate.HasValue) dateTo = (DateTime)dpDateTo.SelectedDate;
                     if ((dateFrom != null && dateFrom > DateTime.Now) || (dateTo != null && dateTo > DateTime.Now))
-                        MessageBox.Show("Невірна дата.");
+                        MessageBox.Show("Введена дата не повинна перевищувати сьогоднішню дату.");
                     else
                     {
-                        DataGridColumns1();
-                        dataGrid.ItemsSource = SalesDA.SalesFilter(cbEmployee.Text, cbCustomer.Text, dateFrom, dateTo, cbProduct.Text, txtQuantityFrom.Text, txtQuantityTo.Text);
-                        ButtonInfoEnabled();
-                        UpdateInfo(SalesDA.SalesFilter(cbEmployee.Text, cbCustomer.Text, dateFrom, dateTo, cbProduct.Text, txtQuantityFrom.Text, txtQuantityTo.Text));
+                        if (dateFrom != null && dateTo != null && dateFrom > dateTo)
+                            MessageBox.Show("Некоректний діапазон дат.");
+                        else {
+                            if (double.TryParse(txtQuantityFrom.Text, out double quantityFrom) && double.TryParse(txtQuantityTo.Text, out double quantityTo) && quantityFrom > quantityTo)
+                            {
+                                MessageBox.Show("Некоректний діапазон загальної суми");
+                            }
+                            else
+                            {
+                                DataGridColumns1();
+                                dataGrid.ItemsSource = SalesDA.SalesFilter(cbEmployee.Text, cbCustomer.Text, dateFrom, dateTo, cbProduct.Text, txtQuantityFrom.Text, txtQuantityTo.Text);
+                                ButtonInfoEnabled();
+                                UpdateInfo(SalesDA.SalesFilter(cbEmployee.Text, cbCustomer.Text, dateFrom, dateTo, cbProduct.Text, txtQuantityFrom.Text, txtQuantityTo.Text));
+                            }
+                            
+                        }
                     }
                 }
                 else

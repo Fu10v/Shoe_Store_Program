@@ -22,7 +22,7 @@ namespace Shoe_Store_DB.AddChangeWindows
     /// </summary>
     public partial class InvoiceAddWindow : Window
     {
-        List<Employee> employees = EmployeeDA.RetrieveAllEmployees();
+        List<Employee> employees = EmployeeDA.RetrieveAllEmployeesWarehouseWorkers();
         List<Supplier> suppliers = SupplierDA.RetrieveAllSuppliers();
 
         bool view = false;
@@ -38,6 +38,7 @@ namespace Shoe_Store_DB.AddChangeWindows
             UpdateLists();
             btnAddChange.Content = "Оформити";
             stackPanel1.Children.Remove(txtTimeOfSale);
+            tbTimeOfSale.Foreground = Brushes.White;
         }
 
         public InvoiceAddWindow(Object invoiceA)
@@ -53,7 +54,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         }
         private void UpdateLists()
         {
-            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployees().Select(employee => employee.Name));
+            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployeesWarehouseWorkers().Select(employee => employee.Name));
             cb2 = new ObservableCollection<string>(SupplierDA.RetrieveAllSuppliers().Select(supplier => supplier.Name));
             DataContext = this;
         }
@@ -80,32 +81,40 @@ namespace Shoe_Store_DB.AddChangeWindows
                 {
                     if (DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale) || view == false)
                     {
-                        int i1 = -1;
-                        int i2 = -1;
-                        foreach (Classes.Employee employee in employees)
+                        if (view == true && timeOfSale > DateTime.Now) 
                         {
-                            if (employee.Name == cbEmployee.Text)
-                            {
-                                i1 = employee.Id;
-                            }
-                        }
-                        foreach (Classes.Supplier supplier in suppliers)
-                        {
-                            if (supplier.Name == cbSupplier.Text)
-                            {
-                                i2 = supplier.Id;
-                            }
-                        }
-                        if (i1 != -1 && i2 != -1)
-                        {
-                            if (view == false) InvoiceDA.InvoiceAdd(i1, i2, DateTime.Now);
-                            else InvoiceDA.InvoiceChange(invoice.Id, i1, i2, timeOfSale);
-                            this.Close();
+                            MessageBox.Show("Введена дата не повинна перевищувати поточну.");
                         }
                         else
                         {
-                            MessageBox.Show("Неправильний працівник або постачальник.");
+                            int i1 = -1;
+                            int i2 = -1;
+                            foreach (Classes.Employee employee in employees)
+                            {
+                                if (employee.Name == cbEmployee.Text)
+                                {
+                                    i1 = employee.Id;
+                                }
+                            }
+                            foreach (Classes.Supplier supplier in suppliers)
+                            {
+                                if (supplier.Name == cbSupplier.Text)
+                                {
+                                    i2 = supplier.Id;
+                                }
+                            }
+                            if (i1 != -1 && i2 != -1)
+                            {
+                                if (view == false) InvoiceDA.InvoiceAdd(i1, i2, DateTime.Now);
+                                else InvoiceDA.InvoiceChange(invoice.Id, i1, i2, timeOfSale);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Неправильний працівник або постачальник.");
+                            }
                         }
+                        
                     }
                     else
                     {

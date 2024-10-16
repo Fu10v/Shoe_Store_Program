@@ -22,7 +22,7 @@ namespace Shoe_Store_DB.AddChangeWindows
     /// </summary>
     public partial class SalesAddWindow : Window
     {
-        List<Employee> employees = EmployeeDA.RetrieveAllEmployees();
+        List<Employee> employees = EmployeeDA.RetrieveAllEmployeesCashiers();
         List<Customer> customers = CustomerDA.RetrieveAllCustomers();
 
         bool view = false;
@@ -53,7 +53,7 @@ namespace Shoe_Store_DB.AddChangeWindows
         }
         private void UpdateLists()
         {
-            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployees().Select(employee => employee.Name));
+            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployeesCashiers().Select(employee => employee.Name));
             cb2 = new ObservableCollection<string>(CustomerDA.RetrieveAllCustomers().Select(customer => customer.Name));
             cb3 = new ObservableCollection<string>(ProductDA.RetrieveAllProducts().Select(product => product.Name));
             DataContext = this;
@@ -81,49 +81,57 @@ namespace Shoe_Store_DB.AddChangeWindows
                 {
                     if (DateTime.TryParse(txtTimeOfSale.Text, out var timeOfSale))
                     {
-                        int i1 = -1;
-                        int i2 = -1;
-                        foreach (Classes.Employee employee in employees)
+                        if (timeOfSale > DateTime.Now)
                         {
-                            if (employee.Name == cbEmployee.Text)
-                            {
-                                i1 = employee.Id;
-                            }
-                        }
-                        foreach (Classes.Customer customer in customers)
-                        {
-                            if (customer.Name == cbCustomer.Text)
-                            {
-                                i2 = customer.Id;
-                            }
-                        }
-                        if (i1 != -1)
-                        {
-                            if (i2 == -1 && cbCustomer.Text != "")
-                            {
-                                MessageBox.Show("Клієнта не знайдено");
-                            }
-                            else
-                            {
-                                if (i1 != -1 && i2 == -1)
-                                {
-                                    if (view == false) SalesDA.SalesAdd(i1, timeOfSale);
-                                    else SalesDA.SalesChange(sales.Id, i1, timeOfSale);
-                                    this.Close();
-                                }
-                                else
-                                {
-                                    
-                                    if (view == false) SalesDA.SalesAdd(i1, i2, timeOfSale);
-                                    else SalesDA.SalesChange(sales.Id, i1, i2, timeOfSale);
-                                    this.Close();
-                                }
-                            }
+                            MessageBox.Show("Введена дата не повинна перевизувати поточну.");
                         }
                         else
                         {
-                            MessageBox.Show("Співробітника не знайдено.");
+                            int i1 = -1;
+                            int i2 = -1;
+                            foreach (Classes.Employee employee in employees)
+                            {
+                                if (employee.Name == cbEmployee.Text)
+                                {
+                                    i1 = employee.Id;
+                                }
+                            }
+                            foreach (Classes.Customer customer in customers)
+                            {
+                                if (customer.Name == cbCustomer.Text)
+                                {
+                                    i2 = customer.Id;
+                                }
+                            }
+                            if (i1 != -1)
+                            {
+                                if (i2 == -1 && cbCustomer.Text != "")
+                                {
+                                    MessageBox.Show("Клієнта не знайдено");
+                                }
+                                else
+                                {
+                                    if (i1 != -1 && i2 == -1)
+                                    {
+                                        if (view == false) SalesDA.SalesAdd(i1, timeOfSale);
+                                        else SalesDA.SalesChange(sales.Id, i1, timeOfSale);
+                                        this.Close();
+                                    }
+                                    else
+                                    {
+
+                                        if (view == false) SalesDA.SalesAdd(i1, i2, timeOfSale);
+                                        else SalesDA.SalesChange(sales.Id, i1, i2, timeOfSale);
+                                        this.Close();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Співробітника не знайдено.");
+                            }
                         }
+                        
                     }
                     else
                     {
@@ -143,13 +151,13 @@ namespace Shoe_Store_DB.AddChangeWindows
 
         private void txtTimeOfSale_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (txtTimeOfSale.Text != "" && txtTimeOfSale.Text != "dd.mm.yyyy hh:mm")
+            if (txtTimeOfSale.Text != "" && txtTimeOfSale.Text != "дд.мм.рррр гг:хм")
             {
                 txtTimeOfSale.Foreground = Brushes.Black;
             }
             else
             {
-                txtTimeOfSale.Text = "dd.mm.yyyy hh:mm";
+                txtTimeOfSale.Text = "дд.мм.рррр гг:хм";
                 txtTimeOfSale.Foreground = Brushes.Gray;
             }
         }

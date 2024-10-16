@@ -90,25 +90,43 @@ namespace Shoe_Store_DB.AddChangeWindows
                     {
                         if (int.TryParse(txtPrice.Text, out int price) && price >= 0)
                         {
-                            int i2 = -1;
-                            foreach (Classes.ProductQuantity productQuantity in productQuantitys)
+                            string selectedProduct = cbProduct.Text;
+                            int iProduct = -1;
+                            foreach (Classes.Product product in products)
                             {
-                                if (productQuantity.ProductId == i1 && productQuantity.Size == cbSize.Text && productQuantity.Color == cbColor.Text)
+                                if (product.Name == selectedProduct)
                                 {
-                                    i2 = productQuantity.Id;
-                                    break;
+                                    iProduct = product.Id;
                                 }
                             }
-                            if (i1 != -1 && i2 != -1)
+                            if (iProduct == -1)
                             {
-                                if (view == false) SalesListDA.SalesListAdd(salesId, i2, price, quantity);
-                                else SalesListDA.SalesListChange(salesList.Id, salesId, i2, price, quantity);
-                                this.Close();
+                                MessageBox.Show("Продукт не знайдено.");
                             }
                             else
                             {
-                                MessageBox.Show("Продукт не знайдено");
+                                productQuantitys = ProductQuantityDA.RetrieveProductQuantity(iProduct);
+                                int i2 = -1;
+                                foreach (Classes.ProductQuantity productQuantity in productQuantitys)
+                                {
+                                    if (productQuantity.ProductId == iProduct && productQuantity.Size == cbSize.Text && productQuantity.Color == cbColor.Text)
+                                    {
+                                        i2 = productQuantity.Id;
+                                        break;
+                                    }
+                                }
+                                if (iProduct != -1 && i2 != -1)
+                                {
+                                    if (view == false) SalesListDA.SalesListAdd(salesId, i2, price, quantity);
+                                    else SalesListDA.SalesListChange(salesList.Id, salesId, i2, price, quantity);
+                                    this.Close();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Продукт не знайдено.");
+                                }
                             }
+                            
 
                         }
                         else MessageBox.Show("Введіть позитивне число або 0 для ціни.");
@@ -131,7 +149,11 @@ namespace Shoe_Store_DB.AddChangeWindows
 
         private void cbProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selectedProduct = cbProduct.SelectedValue.ToString();
+            string selectedProduct = "";
+            if (cbProduct.SelectedItem != null)
+            {
+                selectedProduct = cbProduct.SelectedValue.ToString();
+            }
             i1 = -1;
             foreach (Classes.Product product in products)
             {
@@ -140,9 +162,13 @@ namespace Shoe_Store_DB.AddChangeWindows
                     i1 = product.Id;
                 }
             }
-            productQuantitys = ProductQuantityDA.RetrieveProductQuantity(i1);
-            cbSize.ItemsSource = new ObservableCollection<string>(ProductQuantityDA.RetrieveProductQuantity(i1).Select(productQuantity => productQuantity.Size));
-            cbColor.ItemsSource = new ObservableCollection<string>(ProductQuantityDA.RetrieveProductQuantity(i1).Select(productQuantity => productQuantity.Color));
+            if (i1 != -1)
+            {
+                productQuantitys = ProductQuantityDA.RetrieveProductQuantity(i1);
+                cbSize.ItemsSource = new ObservableCollection<string>(ProductQuantityDA.RetrieveProductQuantity(i1).Select(productQuantity => productQuantity.Size));
+                cbColor.ItemsSource = new ObservableCollection<string>(ProductQuantityDA.RetrieveProductQuantity(i1).Select(productQuantity => productQuantity.Color));
+            }
+            
         }
     }
 }

@@ -71,7 +71,15 @@ namespace Shoe_Store_DB.Views
             {
                 if ((double.TryParse(txtFrom.Text, out double number1) && number1 >= 0 && (txtTo.Text == "до" || txtTo.Text == "")) || (double.TryParse(txtTo.Text, out double number2) && number2 >= 0 && (txtFrom.Text == "від" || txtFrom.Text == "")) || (double.TryParse(txtFrom.Text, out number1) && double.TryParse(txtTo.Text, out number2)) || ((txtFrom.Text == "від" || txtFrom.Text == "") && (txtTo.Text == "до" || txtTo.Text == "")))
                 {
-                    dataGrid.ItemsSource = CustomerDA.CustomerFilter(txtFrom.Text, txtTo.Text);
+                    if (double.TryParse(txtFrom.Text, out double from) && double.TryParse(txtTo.Text, out double to) && from > to)
+                    {
+                        MessageBox.Show("Некоректний діапазон накопичень.");
+                    }
+                    else
+                    {
+                        dataGrid.ItemsSource = CustomerDA.CustomerFilter(txtFrom.Text, txtTo.Text);
+                    }
+                    
                 }
                 else
                 {

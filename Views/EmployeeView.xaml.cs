@@ -85,8 +85,14 @@ namespace Shoe_Store_DB.Views
                 DateTime? dateTo = null;
                 if (dpDateTo.SelectedDate.HasValue) dateTo = (DateTime)dpDateTo.SelectedDate;
                 if ((dateFrom != null && dateFrom > DateTime.Now) || (dateTo != null && dateTo > DateTime.Now))
-                    MessageBox.Show("Невірна дата.");
-                else  dataGrid.ItemsSource = EmployeeDA.EmployeeFilter(cbPosition.Text, cbGender.Text, dateFrom, dateTo);
+                    MessageBox.Show("Введена дата не повинна перевищувати сьогоднішню дату.");
+                else
+                {
+                    if (dateFrom != null && dateTo != null && dateFrom > dateTo)
+                        MessageBox.Show("Некоректний діапазон дат.");
+                    else dataGrid.ItemsSource = EmployeeDA.EmployeeFilter(cbPosition.Text, cbGender.Text, dateFrom, dateTo);
+                }
+                
             }
             else dataGrid.ItemsSource = EmployeeDA.RetrieveAllEmployees();
         }

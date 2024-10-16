@@ -40,7 +40,7 @@
                         <ComboBox x:Name="cbEmployee" Style="{StaticResource ComboBoxFlatStyle}" FontSize="16" FontWeight="Medium" FontFamily="Montserrat" Foreground="Black" 
                                   Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" IsEditable="True" 
                                   Padding="0,0,0,0" ItemsSource="{Binding cb1}"/>
-                        <TextBlock Text="Час поставки" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
+                        <TextBlock Text="Час поставки" x:Name="tbTimeOfSale" Foreground="Black" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Margin="0,5,5,0"/>
                         <TextBox x:Name="txtTimeOfSale" FontSize="15" FontWeight="Medium" FontFamily="Montserrat" Foreground="Gray" CaretBrush="Black"
                                  BorderBrush="Black" BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center" Margin="0,5,5,0" Padding="0,0,0,0"
                                  Cursor="IBeam" TextChanged="txtTimeOfSale_TextChanged" Text="дд.мм.рррр гг:хм"/>

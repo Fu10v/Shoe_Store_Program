@@ -46,8 +46,13 @@ namespace Shoe_Store_DB.AddChangeWindows
             txtFirstName.Text = name[0];
             txtSurname.Text = name[1];
             txtMiddleName.Text = name[2];
-            cbPosition.Text = employee.Position;
-            cbGender.Text = employee.Gender;
+            if (employee.Position == "менеджер") { cbPosition.SelectedIndex = 0; }
+            else if (employee.Position == "продавець-консультант") { cbPosition.SelectedIndex = 1; }
+            else if (employee.Position == "касир") { cbPosition.SelectedIndex = 2; }
+            else if (employee.Position == "складський працівник") { cbPosition.SelectedIndex = 3; }
+            else { cbPosition.SelectedIndex = 4; }
+            if (employee.Gender == "чоловік") { cbGender.SelectedIndex = 0; }
+            else { cbGender.SelectedIndex = 1; }
             txtPhoneNumber.Text = Convert.ToString(employee.PhoneNumber);
             txtEmail.Text = employee.Email;
             txtAddress.Text = employee.Address;
@@ -94,7 +99,8 @@ namespace Shoe_Store_DB.AddChangeWindows
                             DateTime? date = null;
                             if (dpDate.SelectedDate.HasValue) date = (DateTime)dpDate.SelectedDate;
                             if ((date != null && date > DateTime.Now))
-                                MessageBox.Show("Невірна дата.");
+                                MessageBox.Show("Введена дата не повинна перевищувати сьогоднішню дату.");
+
                             else
                             {
                                 if (view == false) EmployeeDA.EmployeeAdd(txtFirstName.Text, txtSurname.Text, txtMiddleName.Text, cbPosition.Text, number, txtEmail.Text, txtAddress.Text, cbGender.Text, date);

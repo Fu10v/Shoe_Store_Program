@@ -244,9 +244,25 @@ namespace Shoe_Store_DB.Views
                
                 if (((double.TryParse(txtPriceFrom.Text, out double number1) && number1 >= 0 && (txtPriceTo.Text == "до" || txtPriceTo.Text == "")) || (double.TryParse(txtPriceTo.Text, out double number2) && number2 >= 0 && (txtPriceFrom.Text == "від" || txtPriceFrom.Text == "")) || (double.TryParse(txtPriceFrom.Text, out number1) && double.TryParse(txtPriceTo.Text, out number2)) || ((txtPriceFrom.Text == "від" || txtPriceFrom.Text == "") && (txtPriceTo.Text == "до" || txtPriceTo.Text == ""))) && ((double.TryParse(txtQuantityFrom.Text, out double number3) && number3 >= 0 && (txtQuantityTo.Text == "до" || txtQuantityTo.Text == "")) || (double.TryParse(txtQuantityTo.Text, out double number4) && number4 >= 0 && (txtQuantityFrom.Text == "від" || txtQuantityFrom.Text == "")) || (double.TryParse(txtQuantityFrom.Text, out number3) && double.TryParse(txtQuantityTo.Text, out number4)) || ((txtQuantityFrom.Text == "від" || txtQuantityFrom.Text == "") && (txtQuantityTo.Text == "до" || txtQuantityTo.Text == ""))))
                 {
-                    DataGridColumns1();
-                    dataGridProduct.ItemsSource = ProductDA.ProductFilter(cbGender.Text, cbType.Text, cbBrand.Text, cbMaterial.Text, cbSeason.Text, cbColor.Text, cbSize.Text, txtPriceFrom.Text, txtPriceTo.Text, txtQuantityFrom.Text, txtQuantityTo.Text);
-                    ButtonInfoEnabled();
+                    if (double.TryParse(txtPriceFrom.Text, out double priceFrom) && double.TryParse(txtPriceTo.Text, out double priceTo) && priceFrom > priceTo)
+                    {
+                        MessageBox.Show("Некоректний діапазон ціни.");
+                    }
+                    else
+                    {
+                        if (double.TryParse(txtQuantityFrom.Text, out double quantityFrom) && double.TryParse(txtQuantityTo.Text, out double quantityTo) && quantityFrom > quantityTo)
+                        {
+                            MessageBox.Show("Некоректний діапазон кількості.");
+                        }
+                        else
+                        {
+                            DataGridColumns1();
+                            dataGridProduct.ItemsSource = ProductDA.ProductFilter(cbGender.Text, cbType.Text, cbBrand.Text, cbMaterial.Text, cbSeason.Text, cbColor.Text, cbSize.Text, txtPriceFrom.Text, txtPriceTo.Text, txtQuantityFrom.Text, txtQuantityTo.Text);
+                            ButtonInfoEnabled();
+                        }
+                        
+                    }
+                    
                 }
                 else
                 {

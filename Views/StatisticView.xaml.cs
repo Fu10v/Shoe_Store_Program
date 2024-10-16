@@ -130,7 +130,7 @@ namespace Shoe_Store_DB.Views
 
         private void UpdateLists()
         {
-            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployees().Select(employe => employe.Name));
+            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployeesCashiers().Select(employe => employe.Name));
             cb2 = new ObservableCollection<string>(BrandDA.RetrieveAllBrands().Select(brand => brand.Name));
             cb3 = new ObservableCollection<string>(ProductDA.RetrieveAllProducts().Select(product => product.Name));
             DataContext = null;
@@ -141,21 +141,41 @@ namespace Shoe_Store_DB.Views
         {
             if (int.TryParse(txtQuantity.Text, out int quantity) && quantity > 0)
             {
+                DateTime dateTimeFrom;
+                DateTime dateTimeTo;
                 string dateFrom = "";
                 string dateTo = "";
                 if (dpDateFrom.SelectedDate != null)
                 {
-                    DateTime dateTime = (DateTime)dpDateFrom.SelectedDate;
-                    dateFrom = $"{dateTime.Year} {dateTime.Month} {dateTime.Day}";
+                    dateTimeFrom = (DateTime)dpDateFrom.SelectedDate;
+                    dateFrom = $"{dateTimeFrom.Year} {dateTimeFrom.Month} {dateTimeFrom.Day}";
                 }
                 if (dpDateTo.SelectedDate != null)
                 {
-                    DateTime dateTime = (DateTime)dpDateFrom.SelectedDate;
-                    dateTo = $"{dateTime.Year} {dateTime.Month} {dateTime.Day}";
+                    dateTimeTo = (DateTime)dpDateFrom.SelectedDate;
+                    dateTo = $"{dateTimeTo.Year} {dateTimeTo.Month} {dateTimeTo.Day}";
                 }
-                string[] name = cbEmployee.Text.Split(" ");
-                double[] salesQuantity = StatisticDA.RetrieveAllSales(quantity, dateFrom, dateTo, name[0], name[1], name[2], cbProduct.Text, cbBrand.Text).Select(sales => sales.Total).ToArray();
-                SeriesCollection = new SeriesCollection
+                if ((dpDateFrom.SelectedDate != null && dpDateFrom.SelectedDate > DateTime.Now) || (dpDateTo.SelectedDate != null && dpDateTo.SelectedDate > DateTime.Now))
+                    MessageBox.Show("Введена дата не повинна перевищувати сьогоднішню дату.");
+                else
+                {
+                    if (dpDateFrom.SelectedDate != null && dpDateTo.SelectedDate != null && dpDateFrom.SelectedDate > dpDateTo.SelectedDate)
+                    {
+                        MessageBox.Show("Некоректний діапазон дат.");
+                    }
+                    else
+                    {
+                        string[] name = cbEmployee.Text.Split(" ");
+                        double[] salesQuantity;
+                        if (name.Length == 3)
+                        {
+                            salesQuantity = StatisticDA.RetrieveAllSales(quantity, dateFrom, dateTo, name[0], name[1], name[2], cbProduct.Text, cbBrand.Text).Select(sales => sales.Total).ToArray();
+                        }
+                        else
+                        {
+                            salesQuantity = StatisticDA.RetrieveAllSales(quantity, dateFrom, dateTo, "", "", "", cbProduct.Text, cbBrand.Text).Select(sales => sales.Total).ToArray();
+                        }
+                        SeriesCollection = new SeriesCollection
                 {
                     new ColumnSeries
                     {
@@ -164,25 +184,28 @@ namespace Shoe_Store_DB.Views
                     }
                 };
 
-                DateTime[] salesTimes = StatisticDA.RetrieveAllSales(quantity, dateFrom, dateTo, "", "", "", "", "").Select(sales => sales.DateTime).ToArray();
-                DateOnly[] salesDates = new DateOnly[salesTimes.Length];
-                int i = 0;
-                foreach (DateTime sales in salesTimes)
-                {
-                    DateOnly dateOnly = new DateOnly(sales.Year, sales.Month, sales.Day);
-                    salesDates[i] = dateOnly;
-                    i++;
+                        DateTime[] salesTimes = StatisticDA.RetrieveAllSales(quantity, dateFrom, dateTo, "", "", "", "", "").Select(sales => sales.DateTime).ToArray();
+                        DateOnly[] salesDates = new DateOnly[salesTimes.Length];
+                        int i = 0;
+                        foreach (DateTime sales in salesTimes)
+                        {
+                            DateOnly dateOnly = new DateOnly(sales.Year, sales.Month, sales.Day);
+                            salesDates[i] = dateOnly;
+                            i++;
+                        }
+                        Labels = salesDates.Select(time => time.ToString()).ToArray();
+                        YFormatter = value => value.ToString("F2");
+                        string cbProductTxt = cbProduct.Text;
+                        string cbBrandTxt = cbBrand.Text;
+                        string cbEmployeeTxt = cbEmployee.Text;
+                        DataContext = null;
+                        DataContext = this;
+                        cbProduct.Text = cbProductTxt;
+                        cbBrand.Text = cbBrandTxt;
+                        cbEmployee.Text = cbEmployeeTxt;
+                    }
                 }
-                Labels = salesDates.Select(time => time.ToString()).ToArray();
-                YFormatter = value => value.ToString("F2");
-                string cbProductTxt = cbProduct.Text;
-                string cbBrandTxt = cbBrand.Text;
-                string cbEmployeeTxt = cbEmployee.Text;
-                DataContext = null;
-                DataContext = this;
-                cbProduct.Text = cbProductTxt;
-                cbBrand.Text = cbBrandTxt;
-                cbEmployee.Text = cbEmployeeTxt;
+                
             }
             else
             {

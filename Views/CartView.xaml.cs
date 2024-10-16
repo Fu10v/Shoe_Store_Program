@@ -23,7 +23,7 @@ namespace Shoe_Store_DB.Views
     /// </summary>
     public partial class CartView : UserControl
     {
-        List<Employee> employees = EmployeeDA.RetrieveAllEmployees();
+        List<Employee> employees = EmployeeDA.RetrieveAllEmployeesCashiers();
         List<Customer> customers = CustomerDA.RetrieveAllCustomers();
 
         double discount = 0;
@@ -50,7 +50,7 @@ namespace Shoe_Store_DB.Views
 
         private void UpdateLists()
         {
-            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployees().Select(employee => employee.Name));
+            cb1 = new ObservableCollection<string>(EmployeeDA.RetrieveAllEmployeesCashiers().Select(employee => employee.Name));
             cb2 = new ObservableCollection<string>(CustomerDA.RetrieveAllCustomers().Select(customer => customer.Name));
             DataContext = null;
             DataContext = this;
@@ -229,6 +229,7 @@ namespace Shoe_Store_DB.Views
                 customerId = -1;
                 discount = 0;
                 chbDiscount.IsEnabled = false;
+                tbDiscount.Text = $"Знижка, %: {0}";
             }
         }
 
@@ -282,7 +283,7 @@ namespace Shoe_Store_DB.Views
                 PdfPCell infoCell = new PdfPCell();
                 infoCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 infoCell.PaddingLeft = 10f; // Задаємо відступ для правильного відображення
-                infoCell.AddElement(new Paragraph("Чек магазин Sole Haven", font));
+                infoCell.AddElement(new Paragraph("Магазин Sole Haven", font));
                 infoCell.AddElement(new Paragraph("Адреса:", font));
                 infoCell.AddElement(new Paragraph("Харків, Хірківська обл., вул. Китаєнка", font));
                 infoCell.AddElement(new Paragraph("Номер телефону: (123) 456-7890", font));
@@ -334,9 +335,9 @@ namespace Shoe_Store_DB.Views
                 if (chbDiscount.IsChecked == true)
                 {
                     document.Add(new Paragraph(" "));
-                    document.Add(new Paragraph($"Загальна сума, грн: {total:C}", font));
-                    document.Add(new Paragraph($"Знижка: {discount:C}", font));
-                    document.Add(new Paragraph($"Сума зі знижкою: {totalWithDiscount:C}", font));
+                    document.Add(new Paragraph($"Загальна сума, грн: {total}", font));
+                    document.Add(new Paragraph($"Знижка, грн: {discount * total / 100}", font));
+                    document.Add(new Paragraph($"Сума зі знижкою, грн: {totalWithDiscount}", font));
                 }
                 else
                 {
