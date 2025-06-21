@@ -39,3 +39,4 @@ The database is designed according to the ER model and normalized to 3NF to elim
 ## Contact
 
 Author: Petro Luchaninov
+Email: luchaninovp5@gmail.com
