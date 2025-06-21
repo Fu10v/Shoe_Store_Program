@@ -1,41 +1,41 @@
-# Проєктування та розробка бази даних «Магазин взуття»
+# Design and development of the "Shoe Store" database
 
-Цей проєкт представляє розробку реляційної бази даних та додатку управління для магазину взуття. База даних створена для зберігання та управління інформацією про товари, клієнтів, постачальників, продажі та інші процеси магазину.
+This project represents the development of a relational database and management application for a shoe store. The database is designed to store and manage information about products, customers, suppliers, sales, and other store processes.
 
-## Опис проєкту
+## Project Description
 
-База даних "Магазин взуття" має на меті забезпечити зручний інструмент для управління запасами, продажами та клієнтською базою магазину. Реалізація бази дозволяє покращити бізнес-процеси та оптимізувати роботу магазину.
+The "Shoe Store" database aims to provide a convenient tool for managing inventory, sales, and the store's customer base. Implementing the database allows you to improve business processes and optimize the store's operations.
 
-## Основні функції:
+## Main functions:
 
-- Управління асортиментом товарів (інформація про взуття: бренд, розмір, сезон, матеріал, ціна тощо).
-- Система обліку клієнтів, включаючи дисконтні програми для постійних покупців.
-- Обробка продажів та повернень товарів.
-- Система управління постачанням та накладними.
-- Статистика продажів та звітність.
+- Product assortment management (shoe information: brand, size, season, material, price, etc.).
+- Customer accounting system, including discount programs for regular customers.
+- Sales and returns processing.
+- Supply and invoice management system.
+- Sales statistics and reporting.
 
-## Технології
+## Technologies
 
-- **Мова програмування:** SQL, MySQL
-- **СУБД:** MySQL
-- **Інструменти:** Visual Studio, MySQL Workbench
-- **Схеми баз даних:** ER-діаграми, реляційна модель
+- **Programming language:** SQL, MySQL
+- **DBMS:** MySQL
+- **Tools:** Visual Studio, MySQL Workbench
+- **Database schemas:** ER diagrams, relational model
 
-## Структура проєкту
+## Project structure
 
-- **SQL скрипти:** Скрипти для створення таблиць, зв'язків і базових запитів.
-- **Документація:** Повний опис предметної області, постановка задачі, ER-діаграми, структура таблиць, функціональні вимоги.
+- **SQL scripts:** Scripts for creating tables, relationships and basic queries.
+- **Documentation:** Full description of the subject area, problem statement, ER diagrams, table structure, functional requirements.
 
-## ER-діаграми та реляційна модель
+## ER diagrams and relational model
 
-База даних спроектована згідно з ER-моделлю та нормалізована до 3NF для усунення надлишкових даних і забезпечення цілісності інформації.
+The database is designed according to the ER model and normalized to 3NF to eliminate redundant data and ensure information integrity.
 
-## Встановлення
+## Installation
 
-1. Завантажте проєкт.
-2. Відкрийте SQL-скрипти для створення таблиць і запитів у вашій СУБД MySQL.
-3. Налаштуйте підключення до MySQL серверу.
+1. Download the project.
+2. Open the SQL scripts to create tables and queries in your MySQL DBMS.
+3. Configure the connection to the MySQL server.
 
-## Контакт
+## Contact
 
-Автор: Петро Лучанінов  
+Author: Petro Luchaninov
